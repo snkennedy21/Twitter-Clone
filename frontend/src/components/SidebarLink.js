@@ -1,11 +1,13 @@
 function SidebarLink({ Icon, text, active }) {
   return (
     <div
-      className={`text-[#d9d9d9] flex items-center justify-center xl:justify-start text-xl space-x-3 hoverAnimation ${
-        active ? "font-bold" : ""
+      className={`text-blackText flex items-center justify-center xl:justify-start text-xl space-x-3 hoverAnimation ${
+        active ? "text-primaryColor" : ""
       }`}
     >
-      <Icon className="h-8 w-8 text-white" />
+      <Icon
+        className={`h-8 w-8 ${active ? "text-primaryColor" : "text-blackText"}`}
+      />
       <span className="hidden xl:inline">{text}</span>
     </div>
   );

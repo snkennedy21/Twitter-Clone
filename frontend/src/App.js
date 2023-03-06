@@ -6,12 +6,15 @@ import { HiBeaker } from "react-icons/hi";
 import profile from "./images/profile.png";
 import SideBar from "./components/SideBar";
 import Feed from "./components/Feed";
+import Modal from "./components/Modal";
 
 function App() {
   return (
-    <main className="bg-black min-h-screen flex max-w-[1500px] mx-auto">
+    <main className="bg-white min-h-screen flex max-w-[1500px] mx-auto">
       <SideBar />
       <Feed />
+      <Modal />
+      {/* <SignupBar /> */}
     </main>
   );
 }

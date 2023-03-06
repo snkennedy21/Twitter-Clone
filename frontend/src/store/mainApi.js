@@ -9,6 +9,9 @@ export const mainApi = createApi({
   tagTypes: ["Tweet", "Comment", "User"],
 
   endpoints: (builder) => ({
+    // *************** //
+    // TWEET ENDPOINTS //
+    // *************** //
     getAllTweets: builder.query({
       query: () => ({
         url: "/tweets",
@@ -17,7 +20,29 @@ export const mainApi = createApi({
       }),
       providesTags: ["Tweets"],
     }),
+
+    createTweet: builder.mutation({
+      query: () => ({
+        url: "/tweets",
+        methods: "POST",
+        body: "data",
+        credentials: "include",
+      }),
+      invalidatesTags: ["Tweets"],
+    }),
+
+    // ************************ //
+    // AUTHENTICATION ENDPOINTS //
+    // ************************ //
+    createAccount: builder.mutation({
+      query: (data) => ({
+        url: "/users",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllTweetsQuery } = mainApi;
+export const { useGetAllTweetsQuery, useCreateTweetMutation } = mainApi;
