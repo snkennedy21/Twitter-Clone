@@ -7,15 +7,22 @@ import profile from "./images/profile.png";
 import SideBar from "./components/SideBar";
 import Feed from "./components/Feed";
 import Modal from "./components/Modal";
+import SignupBar from "./components/SignupBar";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
 
 function App() {
   return (
-    <main className="bg-white min-h-screen flex max-w-[1500px] mx-auto">
-      <SideBar />
-      <Feed />
-      <Modal />
-      {/* <SignupBar /> */}
-    </main>
+    <>
+      <main className="bg-white min-h-screen flex max-w-[1500px] mx-auto">
+        <SideBar />
+        <Feed />
+        <Modal>
+          <Login />
+        </Modal>
+      </main>
+      <SignupBar />
+    </>
   );
 }
 
