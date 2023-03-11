@@ -5,8 +5,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loginStep, setLoginStep] = useState(2);
 
+  // <div className="flex items-center justify-center sm:items-start sm:mt-10 relative overflow-y-scroll">
   return (
-    <div className="flex h-full items-center justify-center sm:items-start sm:mt-10 relative">
+    <div className="flex items-center justify-center sm:items-start sm:mt-10 relative overflow-y-scrolls">
       {loginStep === 1 ? (
         <div className="flex flex-col items-center justify-center w-[475px] px-20">
           <h1 className="font-bold text-3xl self-start mb-8">
@@ -32,7 +33,7 @@ function Login() {
           </p>
         </div>
       ) : (
-        <div className="flex flex-col items-center justify-between w-[475px]">
+        <div className="flex flex-col items-center justify-between w-[475px] px-5">
           <h1 className="font-bold text-3xl self-start mb-6">
             Enter your password
           </h1>
@@ -49,7 +50,7 @@ function Login() {
             className="border border-[#d0d0d0] placeholder-[#606060] py-5 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor"
           />
 
-          <div className="absolute bottom-24 w-[475px]">
+          <div className="w-full">
             <button className="bg-blackText text-white w-full rounded-full py-3 font-bold text-lg mt-6 mb-6">
               Log in
             </button>
