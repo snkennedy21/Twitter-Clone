@@ -26,14 +26,15 @@ function Modal({ children }) {
         }`}
       >
         <div className="bg-white w-full h-screen sm:h-5/6 sm:max-h-[600px] relative sm:rounded-2xl sm:w-[600px] z-40 overflow-hidden overflow-y-scroll pb-4">
-          <div className="flex sticky top-0 z-50">
-            <div className="flex w-1/2 justify-between z-50 bg-white py-3 pl-3">
-              <HiXMark onClick={closeModalHandler} className="h-6 w-6" />
+          <div className="sticky top-0 w-full flex justify-center z-50 bg-white py-3 pl-3">
+            <HiXMark
+              onClick={closeModalHandler}
+              className="h-6 w-6 absolute left-4"
+            />
 
-              <FaTwitter className="h-8 w-8 text-primaryColor translate-x-1/2" />
-            </div>
-            <div className="bg-white w-1/2 sticky"></div>
+            <FaTwitter className="h-8 w-8 text-primaryColor" />
           </div>
+
           {children}
         </div>
       </div>

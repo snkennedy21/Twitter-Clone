@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 function Login() {
-  const [username, setUsername] = useState("snkennedy21");
+  const isModalOpen = useSelector((state) => state.modal.isModalOpen);
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [loginStep, setLoginStep] = useState(2);
+  const [loginStep, setLoginStep] = useState(1);
+
+  useEffect(() => {
+    if (!isModalOpen) setLoginStep(1);
+    setUsername("");
+  }, [isModalOpen]);
 
   // <div className="flex items-center justify-center sm:items-start sm:mt-10 relative overflow-y-scroll">
   return (
@@ -23,7 +30,12 @@ function Login() {
             className="border border-[#d0d0d0] placeholder-[#606060] py-3 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor"
           />
 
-          <button className="bg-blackText text-white w-full rounded-full py-2 font-bold text-sm mt-6 mb-10">
+          <button
+            onClick={() => {
+              setLoginStep(2);
+            }}
+            className="bg-blackText text-white w-full rounded-full py-2 font-bold text-sm mt-6 mb-10"
+          >
             Next
           </button>
 
