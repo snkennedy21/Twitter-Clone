@@ -8,7 +8,6 @@ import SideBar from "./components/SideBar";
 import Feed from "./components/Feed";
 import Modal from "./components/Modal";
 import SignupBar from "./components/SignupBar";
-import Signup from "./components/Signup";
 import Login from "./components/Login";
 
 function App() {
@@ -17,9 +16,7 @@ function App() {
       <main className="bg-white min-h-screen flex max-w-[1500px] mx-auto">
         <SideBar />
         <Feed />
-        <Modal>
-          <Login />
-        </Modal>
+        <Modal>{/* <Login /> */}</Modal>
       </main>
       <SignupBar />
     </>

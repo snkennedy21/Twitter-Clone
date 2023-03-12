@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useLoginMutation } from "../store/mainApi";
 
 function Login() {
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
+  const [login] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginStep, setLoginStep] = useState(1);
@@ -11,6 +13,11 @@ function Login() {
     if (!isModalOpen) setLoginStep(1);
     setUsername("");
   }, [isModalOpen]);
+
+  function changeLoginStep() {
+    if (username.length === 0) return;
+    setLoginStep(2);
+  }
 
   // <div className="flex items-center justify-center sm:items-start sm:mt-10 relative overflow-y-scroll">
   return (
@@ -31,9 +38,7 @@ function Login() {
           />
 
           <button
-            onClick={() => {
-              setLoginStep(2);
-            }}
+            onClick={changeLoginStep}
             className="bg-blackText text-white w-full rounded-full py-2 font-bold text-sm mt-6 mb-10"
           >
             Next

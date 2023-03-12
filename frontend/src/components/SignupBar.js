@@ -1,11 +1,13 @@
 import { useDispatch } from "react-redux";
 
-import { openModal } from "../store/modalSlice";
+import { openModal, changeModalContent } from "../store/modalSlice";
 
 function SignupBar() {
   const dispatch = useDispatch();
 
-  function openModalHandler() {
+  function openModalHandler(e) {
+    const buttonText = e.target.textContent;
+    dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }
 

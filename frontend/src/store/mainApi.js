@@ -42,7 +42,30 @@ export const mainApi = createApi({
         credentials: "include",
       }),
     }),
+
+    login: builder.mutation({
+      query: (data) => ({
+        url: "/users",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
+
+    checkForEmail: builder.query({
+      query: (data) => ({
+        url: "/emails",
+        method: "GET",
+        body: data,
+        credentials: "include",
+      }),
+    }),
   }),
 });
 
-export const { useGetAllTweetsQuery, useCreateTweetMutation } = mainApi;
+export const {
+  useGetAllTweetsQuery,
+  useCreateTweetMutation,
+  useLoginMutation,
+  useCheckForEmailQuery,
+} = mainApi;
