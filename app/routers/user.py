@@ -35,3 +35,8 @@ def get_user(id: int, db: Session = Depends(get_db)):
         )
     
     return user
+
+@router.get("/exists/{email}", response_model=bool)
+def check_user_email_exists(email: str, db: Session=Depends(get_db)):
+    user = db.query(User).where(User.email == email).first()
+    return user is not None
