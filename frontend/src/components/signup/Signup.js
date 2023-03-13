@@ -47,6 +47,8 @@ function Signup() {
     displayedSignupStep = (
       <SignupStepTwo
         changeSignupStep={changeSignupStepHandler}
+        firstName={firstName}
+        lastName={lastName}
         email={email}
         setFirstName={setFirstName}
         setLastName={setLastName}
