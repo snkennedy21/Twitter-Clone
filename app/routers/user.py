@@ -42,8 +42,8 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 
 
-@router.get("/valid/{email}")
-def check_if_email_valid(email: Optional[str] = None, db: Session=Depends(get_db)):
+@router.get("/valid/email/{email}")
+def check_if_email_valid(email: str, db: Session=Depends(get_db)):
     if email is None:
         return {"Message": "Bad"}
     regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
@@ -62,5 +62,19 @@ def check_if_email_valid(email: Optional[str] = None, db: Session=Depends(get_db
             status_code=status.HTTP_409_CONFLICT,
             detail=detail
         )
+
+    return user is not None
+
+
+@router.get("/valid/handle/{twitter_handle}")
+def check_if_twitter_handle_valid(twitter_handle: str, db: Session=Depends(get_db)):
+    user = db.query(User).where(User.handle == twitter_handle).first()
+
+    if user:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="This handle already exists"
+        )
+    
 
     return user is not None

@@ -54,7 +54,15 @@ export const mainApi = createApi({
 
     checkIfEmailValid: builder.mutation({
       query: (email) => ({
-        url: `/users/valid/${email}`,
+        url: `/users/valid/email/${email}`,
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
+
+    checkIfHandleValid: builder.mutation({
+      query: (handle) => ({
+        url: `/users/valid/handle/${handle}`,
         method: "GET",
         credentials: "include",
       }),
@@ -68,4 +76,5 @@ export const {
   useCreateAccountMutation,
   useLoginMutation,
   useCheckIfEmailValidMutation,
+  useCheckIfHandleValidMutation,
 } = mainApi;

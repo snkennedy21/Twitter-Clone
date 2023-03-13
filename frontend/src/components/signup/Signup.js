@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useCreateAccountMutation } from "../../store/mainApi";
+import { closeModal } from "../../store/modalSlice";
 import SignupStepOne from "./SignupStepOne";
 import SignupStepTwo from "./SignupStepTwo";
 import SignupStepThree from "./SignupStepThree";
@@ -17,6 +18,7 @@ function Signup() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [createAccount] = useCreateAccountMutation();
+  const dispatch = useDispatch();
 
   function createAccountHandler() {
     const signupData = {
@@ -27,10 +29,20 @@ function Signup() {
       password: password,
     };
     createAccount(signupData);
+    dispatch(closeModal());
   }
 
+  // Returns all inputs to empty when modal closes
   useEffect(() => {
-    if (!isModalOpen) setSignupStep(1);
+    if (!isModalOpen) {
+      setSignupStep(1);
+      setFirstName("");
+      setLastName("");
+      setEmail("");
+      setHandle("");
+      setPassword("");
+      setConfirmPassword("");
+    }
   }, [isModalOpen]);
 
   function changeSignupStepHandler() {
@@ -59,6 +71,7 @@ function Signup() {
     displayedSignupStep = (
       <SignupStepThree
         changeSignupStep={changeSignupStepHandler}
+        handle={handle}
         setHandle={setHandle}
       />
     );
@@ -66,6 +79,8 @@ function Signup() {
     displayedSignupStep = (
       <SignupStepFour
         changeSignupStep={changeSignupStepHandler}
+        password={password}
+        confirmPassword={confirmPassword}
         setPassword={setPassword}
         setConfirmPassword={setConfirmPassword}
       />
@@ -74,7 +89,7 @@ function Signup() {
     displayedSignupStep = (
       <SignupStepFive
         createAccount={createAccountHandler}
-        name={firstName + lastName}
+        name={`${firstName} ${lastName}`}
         email={email}
         handle={handle}
       />

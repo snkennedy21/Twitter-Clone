@@ -28,6 +28,7 @@ function SignupStepTwo({
         const lastNameEmpty = checkIfLastNameEmpty();
         if (firstNameEmpty || lastNameEmpty) return;
         changeSignupStep();
+        console.log("hello");
       })
       .catch((error) => {
         setEmailError(error.data.detail);
