@@ -52,11 +52,10 @@ export const mainApi = createApi({
       }),
     }),
 
-    checkForEmail: builder.query({
-      query: (data) => ({
-        url: "/emails",
+    checkIfEmailValid: builder.mutation({
+      query: (email) => ({
+        url: `/users/valid/${email}`,
         method: "GET",
-        body: data,
         credentials: "include",
       }),
     }),
@@ -66,6 +65,7 @@ export const mainApi = createApi({
 export const {
   useGetAllTweetsQuery,
   useCreateTweetMutation,
+  useCreateAccountMutation,
   useLoginMutation,
-  useCheckForEmailQuery,
+  useCheckIfEmailValidMutation,
 } = mainApi;

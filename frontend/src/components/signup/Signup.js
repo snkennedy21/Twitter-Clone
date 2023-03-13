@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useCreateAccountMutation } from "../../store/mainApi";
 import SignupStepOne from "./SignupStepOne";
 import SignupStepTwo from "./SignupStepTwo";
 import SignupStepThree from "./SignupStepThree";
@@ -12,7 +13,21 @@ function Signup() {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
+  const [handle, setHandle] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [createAccount] = useCreateAccountMutation();
+
+  function createAccountHandler() {
+    const signupData = {
+      handle: handle,
+      email: email,
+      first_name: firstName,
+      last_name: lastName,
+      password: password,
+    };
+    createAccount(signupData);
+  }
 
   useEffect(() => {
     if (!isModalOpen) setSignupStep(1);
@@ -30,18 +45,38 @@ function Signup() {
     );
   } else if (signupStep === 2) {
     displayedSignupStep = (
-      <SignupStepTwo changeSignupStep={changeSignupStepHandler} />
+      <SignupStepTwo
+        changeSignupStep={changeSignupStepHandler}
+        email={email}
+        setFirstName={setFirstName}
+        setLastName={setLastName}
+        setEmail={setEmail}
+      />
     );
   } else if (signupStep === 3) {
     displayedSignupStep = (
-      <SignupStepThree changeSignupStep={changeSignupStepHandler} />
+      <SignupStepThree
+        changeSignupStep={changeSignupStepHandler}
+        setHandle={setHandle}
+      />
     );
   } else if (signupStep === 4) {
     displayedSignupStep = (
-      <SignupStepFour changeSignupStep={changeSignupStepHandler} />
+      <SignupStepFour
+        changeSignupStep={changeSignupStepHandler}
+        setPassword={setPassword}
+        setConfirmPassword={setConfirmPassword}
+      />
     );
   } else if (signupStep === 5) {
-    displayedSignupStep = <SignupStepFive />;
+    displayedSignupStep = (
+      <SignupStepFive
+        createAccount={createAccountHandler}
+        name={firstName + lastName}
+        email={email}
+        handle={handle}
+      />
+    );
   }
 
   return (

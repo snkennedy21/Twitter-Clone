@@ -1,4 +1,4 @@
-function SignupStepThree({ changeSignupStep }) {
+function SignupStepThree({ changeSignupStep, setHandle }) {
   return (
     <div className="flex flex-col items-center justify-center w-[475px] px-5">
       <h1 className="font-bold text-3xl self-start mb-7">
@@ -6,6 +6,9 @@ function SignupStepThree({ changeSignupStep }) {
       </h1>
 
       <input
+        onChange={(e) => {
+          setHandle(e.target.value);
+        }}
         type="text"
         placeholder="Handle"
         className="border border-[#d0d0d0] placeholder-[#606060] py-4 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor mb-6"
