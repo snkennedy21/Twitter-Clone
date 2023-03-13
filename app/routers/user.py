@@ -1,10 +1,11 @@
-from fastapi import FastAPI, status, HTTPException, Depends, APIRouter
+from fastapi import FastAPI, status, HTTPException, Depends, APIRouter, Query
 from app.schemas import UserCreate, UserResponse
 from app import utils
 from app.models import User
 from sqlalchemy.orm import Session
 from app.database import get_db
 import re
+from typing import Optional
 
 router = APIRouter(
     prefix="/users",
@@ -39,8 +40,12 @@ def get_user(id: int, db: Session = Depends(get_db)):
     
     return user
 
-@router.get("/valid/{email}", response_model=bool)
-def check_if_email_valid(email: str, db: Session=Depends(get_db)):
+
+
+@router.get("/valid/{email}")
+def check_if_email_valid(email: Optional[str] = None, db: Session=Depends(get_db)):
+    if email is None:
+        return {"Message": "Bad"}
     regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
 
     email_invalid = not re.fullmatch(regex, email)
@@ -57,6 +62,5 @@ def check_if_email_valid(email: str, db: Session=Depends(get_db)):
             status_code=status.HTTP_409_CONFLICT,
             detail=detail
         )
-
 
     return user is not None

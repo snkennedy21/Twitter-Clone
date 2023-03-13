@@ -2,6 +2,7 @@ import { useCheckIfEmailValidMutation } from "../../store/mainApi";
 import { useLazyQuery } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";
+import SignupInput from "./SignupInput";
 
 function SignupStepTwo({
   changeSignupStep,
@@ -12,50 +13,62 @@ function SignupStepTwo({
   setLastName,
   setEmail,
 }) {
-  const [checkIfEmailValid, result] = useCheckIfEmailValidMutation();
-  const [firstNameError, setFirstNameError] = useState(false);
-  const [lastNameError, setLastNameError] = useState(false);
+  const [checkIfEmailValid] = useCheckIfEmailValidMutation();
+  const [firstNameError, setFirstNameError] = useState("");
+  const [lastNameError, setLastNameError] = useState("");
   const [emailError, setEmailError] = useState("");
 
-  function checkEmail() {
-    if (email.length === 0) return;
+  function moveToStepThreeHandler() {
+    const emailEmpty = checkIfEmailEmpty();
+    if (emailEmpty) return;
     checkIfEmailValid(email)
       .unwrap()
       .then((payload) => {
-        const firstNameEmpty = checkFirstName();
-        const lastNameEmpty = checkLastName();
+        const firstNameEmpty = checkIfFirstNameEmpty();
+        const lastNameEmpty = checkIfLastNameEmpty();
         if (firstNameEmpty || lastNameEmpty) return;
         changeSignupStep();
       })
       .catch((error) => {
         setEmailError(error.data.detail);
-        checkFirstName();
-        checkLastName();
+        checkIfFirstNameEmpty();
+        checkIfLastNameEmpty();
       });
   }
 
-  function checkFirstName() {
-    if (firstName.length === 0) {
-      setFirstNameError(true);
+  function checkIfEmailEmpty() {
+    if (email.length === 0) {
+      setEmailError("Required Field");
+      checkIfFirstNameEmpty();
+      checkIfLastNameEmpty();
       return true;
     }
     return false;
   }
 
-  function checkLastName() {
-    if (lastName.length === 0)
-      setLastNameError(true, () => {
-        return false;
-      });
+  function checkIfFirstNameEmpty() {
+    if (firstName.length === 0) {
+      setFirstNameError("Required Field");
+      return true;
+    }
+    return false;
+  }
+
+  function checkIfLastNameEmpty() {
+    if (lastName.length === 0) {
+      setLastNameError("Required Field");
+      return true;
+    }
+    return false;
   }
 
   function firstNameChangeHandler(e) {
-    setFirstNameError(false);
+    setFirstNameError("");
     setFirstName(e.target.value);
   }
 
   function lastNameChangeHandler(e) {
-    setLastNameError(false);
+    setLastNameError("");
     setLastName(e.target.value);
   }
 
@@ -64,59 +77,30 @@ function SignupStepTwo({
     setEmail(e.target.value);
   }
 
-  function moveToStepThreeHandler() {
-    checkEmail();
-  }
-
   return (
     <div className="flex flex-col items-center justify-center w-[475px] px-5">
       <h1 className="font-bold text-3xl self-start mb-7">
         Create your account
       </h1>
 
-      {firstNameError ? (
-        <p className="self-start text-red-500 -mt-5 text-sm">Required Field</p>
-      ) : (
-        <></>
-      )}
-
-      <input
-        onChange={firstNameChangeHandler}
-        type="text"
+      <SignupInput
+        changeFunction={firstNameChangeHandler}
+        error={firstNameError}
         placeholder="First Name"
-        className={`border border-[#d0d0d0] placeholder-[#606060] py-4 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor mb-7 ${
-          firstNameError
-            ? "border-red-500 placeholder-red-500 text-red-500"
-            : ""
-        }`}
+        value={firstName}
+      />
+      <SignupInput
+        changeFunction={lastNameChangeHandler}
+        error={lastNameError}
+        placeholder="Last Name"
+        value={lastName}
       />
 
-      {lastNameError ? (
-        <p className="self-start text-red-500 -mt-5 text-sm">Required Field</p>
-      ) : (
-        <></>
-      )}
-      <input
-        onChange={lastNameChangeHandler}
-        type="text"
-        placeholder="Last Name"
-        className={`border border-[#d0d0d0] placeholder-[#606060] py-4 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor mb-7 ${
-          lastNameError ? "border-red-500 placeholder-red-500 text-red-500" : ""
-        }`}
-      />
-      {emailError ? (
-        <p className="self-start text-red-500 -mt-5 text-sm">{emailError}</p>
-      ) : (
-        <></>
-      )}
-      <input
-        onChange={emailChangeHandler}
-        value={email}
-        type="text"
+      <SignupInput
+        changeFunction={emailChangeHandler}
+        error={emailError}
         placeholder="Email"
-        className={`border border-[#d0d0d0] placeholder-[#606060] py-4 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor mb-10 ${
-          emailError ? "border-red-500 placeholder-red-500 text-red-500" : ""
-        }`}
+        value={email}
       />
 
       <p className="text-sm self-start text-[#5a5a5a] mb-4">
