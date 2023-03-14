@@ -38,6 +38,7 @@ function SignupStepThree({ changeSignupStep, handle, setHandle }) {
         error={handleError}
         placeholder="Handle"
         value={handle}
+        type="text"
       />
 
       <p className="text-sm self-start text-[#5a5a5a] mb-4">

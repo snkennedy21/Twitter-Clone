@@ -1,6 +1,6 @@
 import React from "react";
 
-function SignupInput({ changeFunction, error, placeholder, value }) {
+function SignupInput({ changeFunction, error, placeholder, value, type }) {
   return (
     <React.Fragment>
       {error ? (
@@ -11,7 +11,7 @@ function SignupInput({ changeFunction, error, placeholder, value }) {
 
       <input
         onChange={changeFunction}
-        type="text"
+        type={type}
         placeholder={placeholder}
         value={value}
         className={`border border-[#d0d0d0] placeholder-[#606060] py-4 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor mb-7 ${

@@ -51,12 +51,14 @@ function SignupStepFour({
         error={passwordError}
         placeholder="Password"
         value={password}
+        type="password"
       />
       <SignupInput
         changeFunction={confirmPasswordChangeHandler}
         error={confirmPasswordError}
         placeholder="Confirm Password"
         value={confirmPassword}
+        type="password"
       />
 
       <p className="text-sm self-start text-[#5a5a5a] mb-4">

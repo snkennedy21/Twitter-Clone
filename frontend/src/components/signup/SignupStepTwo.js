@@ -89,12 +89,14 @@ function SignupStepTwo({
         error={firstNameError}
         placeholder="First Name"
         value={firstName}
+        type="text"
       />
       <SignupInput
         changeFunction={lastNameChangeHandler}
         error={lastNameError}
         placeholder="Last Name"
         value={lastName}
+        type="text"
       />
 
       <SignupInput
@@ -102,6 +104,7 @@ function SignupStepTwo({
         error={emailError}
         placeholder="Email"
         value={email}
+        type="text"
       />
 
       <p className="text-sm self-start text-[#5a5a5a] mb-4">
