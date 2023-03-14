@@ -1,5 +1,6 @@
 import { HiOutlineSparkles } from "react-icons/hi";
 import Input from "./Input";
+import Tweet from "./Tweet";
 
 function Feed() {
   return (
@@ -12,6 +13,22 @@ function Feed() {
       </div>
 
       <Input />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
+      <Tweet />
     </div>
   );
 }

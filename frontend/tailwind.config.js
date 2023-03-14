@@ -7,6 +7,7 @@ module.exports = {
         primaryColor: "#1d9bf0",
         blackText: "#0f1319",
         greyBorder: "#e5e8e8",
+        greyText: "#e5e8e8",
       },
     },
   },
