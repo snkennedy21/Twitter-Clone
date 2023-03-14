@@ -1,8 +1,13 @@
 import { HiOutlineSparkles } from "react-icons/hi";
 import Input from "./Input";
 import Tweet from "./Tweet";
+import { useGetAllTweetsQuery } from "../store/mainApi";
 
 function Feed() {
+  const { data: tweets, isLoading: tweetsLoading } = useGetAllTweetsQuery();
+
+  console.log(tweets);
+
   return (
     <div className="text-white flex-grow border-l border-r border-greyBorder max-w-2xl sm:ml-[73px] xl:ml-[370px]">
       <div className="text-[#d9d9d9] flex items-center sm:justify-between py-2 px-3 sticky top-0 z-30 bg-white border-b border-greyBorder">
@@ -11,24 +16,21 @@ function Feed() {
           <HiOutlineSparkles className="w-5 h-5 text-primaryColor" />
         </div>
       </div>
-
       <Input />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
-      <Tweet />
+      {tweetsLoading ? (
+        <div>Loading</div>
+      ) : (
+        tweets.map((tweet) => {
+          return (
+            <Tweet
+              key={tweet.Tweet.id}
+              ownerHandle={tweet.Tweet.owner.handle}
+              tweetOwner={`${tweet.Tweet.owner.first_name} ${tweet.Tweet.owner.last_name}`}
+              tweetContent={tweet.Tweet.content}
+            />
+          );
+        })
+      )}
     </div>
   );
 }

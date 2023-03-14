@@ -9,7 +9,7 @@ import {
   HiEllipsisHorizontal,
 } from "react-icons/hi2";
 
-function Tweet() {
+function Tweet({ ownerHandle, tweetOwner, tweetContent }) {
   return (
     <div className="flex gap-3 text-blackText border-b border-greyBorder hover:bg-[#f9f9f9] hover:cursor-pointer p-3">
       <img
@@ -21,14 +21,14 @@ function Tweet() {
       <div className="flex flex-col w-full">
         <div className="flex w-full justify-between">
           <div className="flex gap-1">
-            <h3 className="font-semibold text-md">Sean Kennedy</h3>
-            <span className="text-[#536471]">@Sean</span>
+            <h3 className="font-semibold text-md">{tweetOwner}</h3>
+            <span className="text-[#536471]">@{ownerHandle}</span>
           </div>
           <div className="p-1 hover:bg-[#deeffb] hover:text-primaryColor rounded-full transition">
             <HiEllipsisHorizontal className="h-5 w-5" />
           </div>
         </div>
-        <p>This is the content for the post</p>
+        <p>{tweetContent}</p>
         <div className="flex w-full justify-between pr-28">
           <TweetIcon
             Icon={HiOutlineChatBubbleOvalLeft}
