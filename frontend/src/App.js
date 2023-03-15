@@ -8,7 +8,6 @@ import SideBar from "./components/SideBar";
 import Feed from "./components/Feed";
 import Modal from "./components/Modal";
 import SignupBar from "./components/SignupBar";
-import Login from "./components/Login";
 
 function App() {
   return (

@@ -44,12 +44,19 @@ export const mainApi = createApi({
     }),
 
     login: builder.mutation({
-      query: (data) => ({
-        url: "/users",
-        method: "POST",
-        body: data,
-        credentials: "include",
-      }),
+      query: (info) => {
+        let formData = null;
+        if (info instanceof HTMLElement) {
+          formData = new FormData(info);
+          // formData.append("username", info.email.value);
+        }
+        return {
+          url: "/login",
+          method: "POST",
+          body: formData,
+          credentials: "include",
+        };
+      },
     }),
 
     checkIfEmailValid: builder.mutation({

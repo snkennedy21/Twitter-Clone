@@ -1,0 +1,51 @@
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { useLoginMutation } from "../../store/mainApi";
+import LoginStepOne from "./LoginStepOne";
+import LoginStepTwo from "./LoginStepTwo";
+
+function Login() {
+  const isModalOpen = useSelector((state) => state.modal.isModalOpen);
+  const [login] = useLoginMutation();
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [loginStep, setLoginStep] = useState(1);
+
+  async function loginHandler(e) {
+    e.preventDefault();
+    const payload = await login(e.target);
+    console.log(payload);
+  }
+
+  useEffect(() => {
+    if (!isModalOpen) setLoginStep(1);
+    setUsername("");
+  }, [isModalOpen]);
+
+  function changeLoginStepHandler() {
+    if (username.length === 0) return;
+    setLoginStep(2);
+  }
+
+  // <div className="flex items-center justify-center sm:items-start sm:mt-10 relative overflow-y-scroll">
+  return (
+    <div className="flex items-center justify-center sm:items-start sm:mt-10 relative overflow-y-scrolls">
+      {loginStep === 1 ? (
+        <LoginStepOne
+          setUsername={setUsername}
+          username={username}
+          changeLoginStep={changeLoginStepHandler}
+        />
+      ) : (
+        <LoginStepTwo
+          username={username}
+          setPassword={setPassword}
+          password={password}
+          login={loginHandler}
+        />
+      )}
+    </div>
+  );
+}
+
+export default Login;

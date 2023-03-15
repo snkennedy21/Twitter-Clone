@@ -4,7 +4,7 @@ import { HiXMark } from "react-icons/hi2";
 import { FaTwitter } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
-import Login from "./Login";
+import Login from "./login/Login";
 import Signup from "./signup/Signup";
 
 function Modal({ children }) {

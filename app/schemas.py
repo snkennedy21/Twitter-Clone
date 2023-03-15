@@ -19,6 +19,7 @@ class UserResponse(BaseModel):
     handle: str
     first_name: str
     last_name: str
+    email: EmailStr
 
     class Config:
         orm_mode = True
@@ -61,6 +62,7 @@ class TweetOut(BaseModel):
 class Token(BaseModel):
     access_token: str
     token_type: str
+    user: UserResponse
 
 class TokenData(BaseModel):
     id: Optional[str] = None
