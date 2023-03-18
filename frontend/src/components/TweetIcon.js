@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function TweetIcon({ Icon, backgroundColor, textColor, rotate }) {
+function TweetIcon({
+  Icon,
+  backgroundColor,
+  textColor,
+  rotate,
+  clickFunction,
+}) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -11,6 +17,7 @@ function TweetIcon({ Icon, backgroundColor, textColor, rotate }) {
       onMouseLeave={() => {
         setIsHovered(false);
       }}
+      onClick={clickFunction}
       className="flex items-center gap-1"
     >
       <div

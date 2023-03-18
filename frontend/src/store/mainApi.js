@@ -31,6 +31,15 @@ export const mainApi = createApi({
       invalidatesTags: ["Tweets"],
     }),
 
+    likeTweet: builder.mutation({
+      query: (data) => ({
+        url: "/like",
+        methods: "POST",
+        body: data,
+        credentials: "include",
+      }),
+    }),
+
     // ************************ //
     // AUTHENTICATION ENDPOINTS //
     // ************************ //

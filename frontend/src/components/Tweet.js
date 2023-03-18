@@ -10,8 +10,17 @@ import {
 } from "react-icons/hi2";
 
 function Tweet({ ownerHandle, tweetOwner, tweetContent }) {
+  function likeTweetHandler() {
+    
+  }
+
+  function viewTweetHandler() {}
+
   return (
-    <div className="flex gap-3 text-blackText border-b border-greyBorder hover:bg-[#f9f9f9] hover:cursor-pointer p-3">
+    <div
+      onClick={viewTweetHandler}
+      className="flex gap-3 text-blackText border-b border-greyBorder hover:bg-[#f9f9f9] hover:cursor-pointer p-3"
+    >
       <img
         src={profilePic}
         alt=""
@@ -45,6 +54,7 @@ function Tweet({ ownerHandle, tweetOwner, tweetContent }) {
             Icon={HiOutlineHeart}
             backgroundColor={"bg-[#f9e2ed]"}
             textColor={"text-[#f91c80]"}
+            clickFunction={likeTweetHandler}
           />
           <TweetIcon
             Icon={HiBars3CenterLeft}

@@ -13,6 +13,8 @@ router = APIRouter(
 @router.post("/", status_code=status.HTTP_201_CREATED)
 def like(like: LikeCreated, db: Session = Depends(database.get_db), current_user: int = Depends(oauth2.get_current_user)):
 
+    
+
     tweet = db.query(Tweet).where(Tweet.id == like.tweet_id).first()
     if not tweet:
         raise HTTPException(
