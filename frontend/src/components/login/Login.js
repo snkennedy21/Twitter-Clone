@@ -3,9 +3,11 @@ import { useSelector, useDispatch } from "react-redux";
 import { useLoginMutation } from "../../store/mainApi";
 import LoginStepOne from "./LoginStepOne";
 import LoginStepTwo from "./LoginStepTwo";
+import { validateToken } from "../../store/tokenSlice";
 
 function Login() {
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
+  const dispatch = useDispatch();
   const [login] = useLoginMutation();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -14,7 +16,10 @@ function Login() {
   async function loginHandler(e) {
     e.preventDefault();
     const payload = await login(e.target);
-    console.log(payload);
+    let expirationTime = new Date();
+    expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
+    document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;
+    dispatch(validateToken());
   }
 
   useEffect(() => {
