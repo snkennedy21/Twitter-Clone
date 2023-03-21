@@ -1,7 +1,7 @@
-from fastapi import FastAPI, status, HTTPException, Response, Depends, APIRouter
+from fastapi import FastAPI, status, HTTPException, Response, Depends, APIRouter, Cookie
 from app import utils
 from app.schemas import TweetResponse, TweetCreate, TweetOut
-from app.models import Tweet, Like
+from app.models import Tweet, Like, User
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database import get_db
@@ -13,11 +13,28 @@ router = APIRouter(
     tags=["Tweets"]
 )
 
+# , response_model=List[TweetOut]
+@router.get("/")
+def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
+    current_user = oauth2.get_current_user(access_token, db)
 
-@router.get("/", response_model=List[TweetOut])
-def get_tweets(db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
-    tweets = db.query(Tweet, func.count(Like.tweet_id).label("likes")).join(Like, Like.tweet_id == Tweet.id, isouter=True).group_by(Tweet.id).all()
-    return tweets
+    tweets = db.query(Tweet).all()
+
+    list_of_tweets = []
+    for tweet in tweets:
+        like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()
+        owner = db.query(User.handle, User.email, User.id, User.first_name).filter(User.id == tweet.owner_id).first()._asdict()
+        tweet_dict = {
+            "id": tweet.id,
+            "content": tweet.content,
+            "created_at": tweet.created_at,
+            "owner_id": tweet.owner_id,
+            "like_count": like_count,
+            "owner": owner,
+        }
+        list_of_tweets.append(tweet_dict)
+
+    return list_of_tweets
 
 
 @router.get("/{id}", response_model=TweetOut)
