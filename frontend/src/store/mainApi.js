@@ -24,30 +24,31 @@ export const mainApi = createApi({
     createTweet: builder.mutation({
       query: () => ({
         url: "/tweets",
-        methods: "POST",
+        method: "POST",
         body: "data",
         credentials: "include",
       }),
-      invalidatesTags: ["Tweets"],
     }),
 
     likeTweet: builder.mutation({
       query: (data) => ({
         url: "/like",
-        methods: "POST",
+        method: "POST",
         body: data,
         credentials: "include",
+        contentType: "application/json",
       }),
+      invalidatesTags: ["Tweets"],
     }),
 
     // ************************ //
     // AUTHENTICATION ENDPOINTS //
     // ************************ //
     createAccount: builder.mutation({
-      query: (data) => ({
+      query: (likeData) => ({
         url: "/users",
         method: "POST",
-        body: data,
+        body: likeData,
         credentials: "include",
       }),
     }),
@@ -89,6 +90,7 @@ export const mainApi = createApi({
 export const {
   useGetAllTweetsQuery,
   useCreateTweetMutation,
+  useLikeTweetMutation,
   useCreateAccountMutation,
   useLoginMutation,
   useCheckIfEmailValidMutation,

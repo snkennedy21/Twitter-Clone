@@ -6,6 +6,7 @@ function TweetIcon({
   textColor,
   rotate,
   clickFunction,
+  number,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -32,7 +33,7 @@ function TweetIcon({
         />
       </div>
       <span className={`text-sm transition ${isHovered ? textColor : ""}`}>
-        14
+        {number}
       </span>
     </div>
   );

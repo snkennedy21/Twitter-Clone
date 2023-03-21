@@ -8,10 +8,24 @@ import {
   HiBars3CenterLeft,
   HiEllipsisHorizontal,
 } from "react-icons/hi2";
+import { useLikeTweetMutation } from "../store/mainApi";
 
-function Tweet({ ownerHandle, tweetOwner, tweetContent }) {
+function Tweet({
+  tweetId,
+  ownerHandle,
+  tweetOwner,
+  tweetContent,
+  likeCount,
+  userHasLiked,
+}) {
+  const [likeTweet] = useLikeTweetMutation();
+
   function likeTweetHandler() {
-    
+    const tweetData = {
+      tweet_id: tweetId,
+      dir: userHasLiked ? 0 : 1,
+    };
+    likeTweet(tweetData);
   }
 
   function viewTweetHandler() {}
@@ -55,6 +69,7 @@ function Tweet({ ownerHandle, tweetOwner, tweetContent }) {
             backgroundColor={"bg-[#f9e2ed]"}
             textColor={"text-[#f91c80]"}
             clickFunction={likeTweetHandler}
+            number={likeCount}
           />
           <TweetIcon
             Icon={HiBars3CenterLeft}

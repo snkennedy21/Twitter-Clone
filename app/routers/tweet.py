@@ -18,12 +18,18 @@ router = APIRouter(
 def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
 
+    print(current_user)
+
     tweets = db.query(Tweet).all()
 
     list_of_tweets = []
     for tweet in tweets:
         like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()
-        owner = db.query(User.handle, User.email, User.id, User.first_name).filter(User.id == tweet.owner_id).first()._asdict()
+        owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
+
+        if current_user:
+            user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None
+
         tweet_dict = {
             "id": tweet.id,
             "content": tweet.content,
@@ -31,6 +37,7 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
             "owner_id": tweet.owner_id,
             "like_count": like_count,
             "owner": owner,
+            "user_has_liked": user_has_liked,
         }
         list_of_tweets.append(tweet_dict)
 
