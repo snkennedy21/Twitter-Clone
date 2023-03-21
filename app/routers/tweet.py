@@ -22,6 +22,9 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
 
     tweets = db.query(Tweet).all()
 
+    if current_user is None:
+        user_has_liked = False
+
     list_of_tweets = []
     for tweet in tweets:
         like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()

@@ -12,6 +12,7 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { invalidateToken, validateToken } from "./store/tokenSlice";
 import { useDispatch } from "react-redux";
+import React from "react";
 
 function App() {
   const token = useSelector((state) => state.token).token;
@@ -28,14 +29,22 @@ function App() {
 
   console.log("User Is Logged In:", token);
   return (
-    <>
-      <main className="bg-white min-h-screen flex max-w-[1500px] mx-auto">
-        <SideBar />
-        <Feed />
-        <Modal>{/* <Login /> */}</Modal>
-      </main>
-      <SignupBar />
-    </>
+    <React.Fragment>
+      <BrowserRouter>
+        <main className="bg-white min-h-screen flex max-w-[1500px] mx-auto">
+          <SideBar />
+          <Feed>
+            <Routes>
+              <Route path="/home" element={<Home />} />
+              <Route path="/home" element={<Test />} />
+            </Routes>
+          </Feed>
+
+          <Modal>{/* <Login /> */}</Modal>
+        </main>
+        <SignupBar />
+      </BrowserRouter>
+    </React.Fragment>
   );
 }
 
