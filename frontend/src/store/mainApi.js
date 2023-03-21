@@ -6,7 +6,7 @@ export const mainApi = createApi({
     baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
 
-  tagTypes: ["Tweet", "Comment", "User"],
+  tagTypes: ["Tweet", "Tweet", "Comment", "User"],
 
   endpoints: (builder) => ({
     // *************** //
@@ -19,6 +19,15 @@ export const mainApi = createApi({
         credentials: "include",
       }),
       providesTags: ["Tweets"],
+    }),
+
+    getTweet: builder.query({
+      query: (tweetID) => ({
+        url: `/tweets/${tweetID}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["Tweet"],
     }),
 
     createTweet: builder.mutation({
@@ -89,6 +98,7 @@ export const mainApi = createApi({
 
 export const {
   useGetAllTweetsQuery,
+  useGetTweetQuery,
   useCreateTweetMutation,
   useLikeTweetMutation,
   useCreateAccountMutation,

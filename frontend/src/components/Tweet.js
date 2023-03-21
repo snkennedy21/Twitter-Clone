@@ -9,6 +9,7 @@ import {
   HiEllipsisHorizontal,
 } from "react-icons/hi2";
 import { useLikeTweetMutation } from "../store/mainApi";
+import { useNavigate } from "react-router-dom";
 
 function Tweet({
   tweetId,
@@ -19,6 +20,7 @@ function Tweet({
   userHasLiked,
 }) {
   const [likeTweet] = useLikeTweetMutation();
+  const navigate = useNavigate();
 
   function likeTweetHandler() {
     const tweetData = {
@@ -28,7 +30,9 @@ function Tweet({
     likeTweet(tweetData);
   }
 
-  function viewTweetHandler() {}
+  function viewTweetHandler() {
+    navigate(`/tweets/${tweetId}`);
+  }
 
   return (
     <div

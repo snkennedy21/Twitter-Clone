@@ -8,6 +8,7 @@ import SideBar from "./components/SideBar";
 import Feed from "./components/Feed";
 import Modal from "./components/Modal";
 import SignupBar from "./components/SignupBar";
+import CurrentTweet from "./components/CurrentTweet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { invalidateToken, validateToken } from "./store/tokenSlice";
@@ -36,7 +37,8 @@ function App() {
           <Feed>
             <Routes>
               <Route path="/home" element={<Home />} />
-              <Route path="/home" element={<Test />} />
+              {/* <Route path="/home" element={<Test />} /> */}
+              <Route path="/tweets/:tweetId" element={<CurrentTweet />} />
             </Routes>
           </Feed>
 
