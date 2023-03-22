@@ -18,8 +18,6 @@ router = APIRouter(
 def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
 
-    print(current_user)
-
     tweets = db.query(Tweet).all()
 
     if current_user is None:
@@ -47,10 +45,30 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
     return list_of_tweets
 
 
-@router.get("/{id}", response_model=TweetOut)
-def get_tweet(id: int, db: Session = Depends(get_db)):
-    tweet = db.query(Tweet, func.count(Like.tweet_id).label("likes")).join(Like, Like.tweet_id == Tweet.id, isouter=True).group_by(Tweet.id).where(Tweet.id == id).first()
-    return tweet
+@router.get("/{id}")
+def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie(None)):
+    current_user = oauth2.get_current_user(access_token, db)
+
+    tweet = db.query(Tweet).where(Tweet.id == id).first()
+    owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
+    like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == id).scalar()
+
+    if current_user is None:
+        user_has_liked = False
+
+    if current_user:
+        user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None
+    tweet_dict = {
+        "id": tweet.id,
+        "content": tweet.content,
+        "created_at": tweet.created_at,
+        "owner_id": tweet.owner_id,
+        "like_count": like_count,
+        "owner": owner,
+        "user_has_liked": user_has_liked,
+    }
+
+    return tweet_dict
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=TweetResponse)

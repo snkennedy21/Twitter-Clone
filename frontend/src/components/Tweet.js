@@ -4,6 +4,7 @@ import {
   HiOutlineChatBubbleOvalLeft,
   HiOutlineArrowPath,
   HiOutlineHeart,
+  HiHeart,
   HiArrowUpTray,
   HiBars3CenterLeft,
   HiEllipsisHorizontal,
@@ -22,7 +23,8 @@ function Tweet({
   const [likeTweet] = useLikeTweetMutation();
   const navigate = useNavigate();
 
-  function likeTweetHandler() {
+  function likeTweetHandler(e) {
+    e.stopPropagation();
     const tweetData = {
       tweet_id: tweetId,
       dir: userHasLiked ? 0 : 1,
@@ -69,7 +71,8 @@ function Tweet({
             rotate={true}
           />
           <TweetIcon
-            Icon={HiOutlineHeart}
+            Icon={userHasLiked ? HiHeart : HiOutlineHeart}
+            userHasLiked={userHasLiked}
             backgroundColor={"bg-[#f9e2ed]"}
             textColor={"text-[#f91c80]"}
             clickFunction={likeTweetHandler}
