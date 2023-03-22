@@ -18,10 +18,12 @@ router = APIRouter(
 def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
 
+    print('hello')
     tweets = db.query(Tweet).all()
 
     if current_user is None:
         user_has_liked = False
+    
 
     list_of_tweets = []
     for tweet in tweets:
@@ -58,6 +60,29 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
 
     if current_user:
         user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None
+    
+    replies = []
+    for reply in tweet.replies:
+        if current_user is None:
+            reply_user_has_liked = False
+        
+        if current_user:
+            reply_user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == reply.id).first() is not None
+
+        reply_owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == reply.owner_id).first()._asdict()
+        reply_like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == reply.id).scalar()
+        reply_dict = {
+            "id": reply.id,
+            "content": reply.content,
+            "created_at": reply.created_at,
+            "owner_id": reply.owner_id,
+            "like_count": reply_like_count,
+            "owner": reply_owner,
+            "user_has_liked": reply_user_has_liked,
+        }
+        replies.append(reply_dict)
+
+
     tweet_dict = {
         "id": tweet.id,
         "content": tweet.content,
@@ -66,15 +91,15 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
         "like_count": like_count,
         "owner": owner,
         "user_has_liked": user_has_liked,
+        "replies": replies,
     }
 
     return tweet_dict
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=TweetResponse)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_tweet(tweet: TweetCreate, db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
 
-    print(current_user)
     new_tweet = Tweet(owner_id=current_user.id, **tweet.dict())
     db.add(new_tweet)
     db.commit()

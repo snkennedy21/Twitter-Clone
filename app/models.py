@@ -1,5 +1,5 @@
 from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, backref
 from sqlalchemy.sql.expression import null, text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from .database import Base
@@ -12,6 +12,8 @@ class Tweet(Base):
     created_at = Column(TIMESTAMP(timezone=True), nullable=False, server_default=text('now()'))
     owner_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), nullable=False)
     owner = relationship("User")
+    parent_tweet_id = Column(Integer, ForeignKey('tweets.id'))
+    replies = relationship("Tweet", backref=backref('parent_tweet', remote_side=[id]))
 
 
 class User(Base):

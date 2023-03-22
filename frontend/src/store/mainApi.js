@@ -47,7 +47,7 @@ export const mainApi = createApi({
         credentials: "include",
         contentType: "application/json",
       }),
-      invalidatesTags: ["Tweets"],
+      invalidatesTags: ["Tweets", "Tweet"],
     }),
 
     // ************************ //

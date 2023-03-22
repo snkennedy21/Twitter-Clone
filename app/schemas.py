@@ -36,6 +36,7 @@ class UserLogin(BaseModel):
 
 class TweetCreate(BaseModel):
     content: str
+    parent_tweet_id: Optional[str] = None
 
 class TweetResponse(BaseModel):
     id: int
