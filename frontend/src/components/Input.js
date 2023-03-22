@@ -15,7 +15,7 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useCreateTweetMutation } from "../store/mainApi";
 
-function Input() {
+function Input({ placeholder }) {
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -49,7 +49,7 @@ function Input() {
             onChange={(e) => {
               setInput(e.target.value);
             }}
-            placeholder="What's happening?"
+            placeholder={placeholder}
             value={input}
             rows="2"
           />

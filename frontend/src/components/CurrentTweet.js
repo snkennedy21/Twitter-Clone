@@ -12,6 +12,7 @@ import {
   HiOutlineHeart,
   HiArrowUpTray,
   HiBars3CenterLeft,
+  HiOutlineBookmark,
   HiEllipsisHorizontal,
 } from "react-icons/hi2";
 
@@ -72,16 +73,26 @@ function CurrentTweet() {
             <span className="text-[#536471]">
               <span className="font-bold text-blackText">17</span> Retweets
             </span>
-            <span>
-              <span className="font-bold">17</span> Retweets
+            <span className="text-[#536471]">
+              <span className="font-bold text-blackText">17</span> Retweets
             </span>
-            <span>
-              <span className="font-bold">17</span> Retweets
+            <span className="text-[#536471]">
+              <span className="font-bold text-blackText">
+                {tweet.like_count}
+              </span>{" "}
+              {tweet.like_count === 1 ? "Like" : "Likes"}
             </span>
           </div>
-          <div>Hello</div>
+          <div className="flex justify-around py-2">
+            <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
+            <HiOutlineArrowPath className="w-5 h-5" />
+            <HiOutlineHeart className="w-5 h-5" />
+            <HiOutlineBookmark className="w-5 h-5" />
+            <HiArrowUpTray className="w-5 h-5" />
+          </div>
         </div>
       )}
+      <Input placeholder={"Tweet your reply"} />
       {tweetsLoading ? (
         <div>Loading</div>
       ) : (

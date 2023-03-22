@@ -17,7 +17,7 @@ function Home() {
           <HiOutlineSparkles className="w-5 h-5 text-primaryColor" />
         </div>
       </div>
-      <Input />
+      <Input placeholder="What's happening?" />
       {tweetsLoading ? (
         <div>Loading</div>
       ) : (
