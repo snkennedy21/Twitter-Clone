@@ -50,8 +50,31 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
 @router.get("/{id}")
 def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
-
     tweet = db.query(Tweet).where(Tweet.id == id).first()
+
+    parent_tweet = tweet.parent_tweet
+    parent_tweets = []
+    while parent_tweet:
+        parent_owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == parent_tweet.owner_id).first()._asdict()
+        parent_like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == parent_tweet.id).scalar()
+
+        if current_user is None:
+            parent_user_has_liked = False
+        else:
+            parent_user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == parent_tweet.id).first() is not None
+
+        parent_tweet_dict = {
+            "id": parent_tweet.id,
+            "content": parent_tweet.content,
+            "created_at": parent_tweet.created_at,
+            "owner_id": parent_tweet.owner_id,
+            "like_count": parent_like_count,
+            "owner": parent_owner,
+            "user_has_liked": parent_user_has_liked,
+        }
+        parent_tweets.append(parent_tweet_dict)
+        parent_tweet = parent_tweet.parent_tweet
+
     owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
     like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == id).scalar()
 
@@ -92,6 +115,7 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
         "owner": owner,
         "user_has_liked": user_has_liked,
         "replies": replies,
+        "parent_tweets": parent_tweets,
     }
 
     return tweet_dict

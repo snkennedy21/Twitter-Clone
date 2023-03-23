@@ -31,6 +31,8 @@ function Home() {
               tweetContent={tweet.content}
               likeCount={tweet.like_count}
               userHasLiked={tweet.user_has_liked}
+              isChainOfTweets={false}
+              extraPadding={"3"}
             />
           );
         })

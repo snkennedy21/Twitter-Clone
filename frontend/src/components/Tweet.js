@@ -19,6 +19,8 @@ function Tweet({
   tweetContent,
   likeCount,
   userHasLiked,
+  isChainOfTweets,
+  extraPadding,
 }) {
   const [likeTweet] = useLikeTweetMutation();
   const navigate = useNavigate();
@@ -39,13 +41,18 @@ function Tweet({
   return (
     <div
       onClick={viewTweetHandler}
-      className="flex gap-3 text-blackText border-b border-greyBorder hover:bg-[#f9f9f9] hover:cursor-pointer p-3"
+      className={`flex gap-3 text-blackText border-greyBorder hover:bg-[#f9f9f9] hover:cursor-pointer px-3 p-${extraPadding} ${
+        isChainOfTweets ? "" : "border-b"
+      }`}
     >
-      <img
-        src={profilePic}
-        alt=""
-        className="h-11 w-11 rounded-full cursor-pointer"
-      />
+      <div className="flex flex-col w-12">
+        <img src={profilePic} alt="" className="h-11 w-11 rounded-full" />
+        <div
+          className={`${
+            isChainOfTweets ? "w-[2px] h-full bg-[#c9c9c9] ml-5 my-1" : ""
+          }`}
+        ></div>
+      </div>
 
       <div className="flex flex-col w-full">
         <div className="flex w-full justify-between">

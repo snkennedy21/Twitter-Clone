@@ -29,7 +29,7 @@ function CurrentTweet() {
 
   return (
     <React.Fragment>
-      <div className="text-[#d9d9d9] flex gap-6 items-center py-2 px-3 sticky top-0 z-30 bg-white border-b border-greyBorder">
+      <div className="text-[#d9d9d9] flex gap-6 items-center py-2 px-3 sticky top-0 z-30 bg-white border-b border-greyBorder mb-3">
         <div
           onClick={returnToHome}
           className="hoverAnimation w-9 h-9 flex items-center justify-center xl:px-0"
@@ -41,9 +41,31 @@ function CurrentTweet() {
       {tweetsLoading ? (
         <div>Loading</div>
       ) : (
-        <div className="text-blackText border-b border-greyBorder m-4">
+        tweet.parent_tweets
+          .slice()
+          .reverse()
+          .map((tweet) => {
+            return (
+              <Tweet
+                key={tweet.id}
+                tweetId={tweet.id}
+                ownerHandle={tweet.owner.handle}
+                tweetOwner={`${tweet.owner.first_name} ${tweet.owner.last_name}`}
+                tweetContent={tweet.content}
+                likeCount={tweet.like_count}
+                userHasLiked={tweet.user_has_liked}
+                isChainOfTweets={true}
+                extraPadding={"0"}
+              />
+            );
+          })
+      )}
+      {tweetsLoading ? (
+        <div>Loading</div>
+      ) : (
+        <div className="text-blackText border-b border-greyBorder m-3 mt-0">
           <div className=" border-b border-greyBorder">
-            <div className="flex gap-3">
+            <div className="flex gap-3 mb-4">
               <img
                 src={profilePic}
                 alt=""
@@ -54,18 +76,15 @@ function CurrentTweet() {
                 <span className="text-[#536471]">@{tweet.owner.handle}</span>
               </div>
             </div>
-            <div className="flex flex-col w-full gap-2">
-              <div className="flex w-full justify-between">
-                <div className="text-[#536471]">
-                  Replying to{" "}
-                  <span className="text-primaryColor">@ThePerson</span>
-                </div>
-              </div>
+            <div className="flex flex-col w-full gap-4 mb-4">
               <p>{tweet.content}</p>
               <div className="flex">
-                <span className="text-[#536471]">4:45 PM March 20, 2023</span>
-                <span className="font-bold">5</span>
-                <span className="text-[#536471]">views</span>
+                <span className="text-[#536471] mr-2">
+                  4:45 PM March 20, 2023
+                </span>
+                <span className="text-[#536471] mr-2">·</span>
+                <span className="font-bold mr-1">5</span>
+                <span className="text-[#536471] mr-2">views</span>
               </div>
             </div>
           </div>
@@ -74,7 +93,7 @@ function CurrentTweet() {
               <span className="font-bold text-blackText">17</span> Retweets
             </span>
             <span className="text-[#536471]">
-              <span className="font-bold text-blackText">17</span> Retweets
+              <span className="font-bold text-blackText">17</span> Quotes
             </span>
             <span className="text-[#536471]">
               <span className="font-bold text-blackText">
@@ -83,7 +102,7 @@ function CurrentTweet() {
               {tweet.like_count === 1 ? "Like" : "Likes"}
             </span>
           </div>
-          <div className="flex justify-around py-2">
+          <div className="flex justify-around py-3">
             <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
             <HiOutlineArrowPath className="w-5 h-5" />
             <HiOutlineHeart className="w-5 h-5" />
@@ -106,6 +125,7 @@ function CurrentTweet() {
               tweetContent={reply.content}
               likeCount={reply.like_count}
               userHasLiked={reply.user_has_liked}
+              extraPadding={"3"}
             />
           );
         })
