@@ -4,6 +4,7 @@ import Input from "./Input";
 import Tweet from "./Tweet";
 import { useGetTweetQuery } from "../store/mainApi";
 import React from "react";
+import { useSelector } from "react-redux";
 import { HiArrowLeft } from "react-icons/hi2";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -17,6 +18,7 @@ import {
 } from "react-icons/hi2";
 
 function CurrentTweet() {
+  const token = useSelector((state) => state.token).token;
   const { tweetId } = useParams();
   const { data: tweet, isLoading: tweetsLoading } = useGetTweetQuery(tweetId);
   const navigate = useNavigate();
@@ -111,7 +113,7 @@ function CurrentTweet() {
           </div>
         </div>
       )}
-      <Input placeholder={"Tweet your reply"} />
+      {token && <Input placeholder={"Tweet your reply"} />}
       {tweetsLoading ? (
         <div>Loading</div>
       ) : (

@@ -3,9 +3,11 @@ import Input from "./Input";
 import Tweet from "./Tweet";
 import { useGetAllTweetsQuery } from "../store/mainApi";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function Home() {
   const { data: tweets, isLoading: tweetsLoading } = useGetAllTweetsQuery();
+  const token = useSelector((state) => state.token).token;
 
   console.log(tweets);
 
@@ -17,7 +19,8 @@ function Home() {
           <HiOutlineSparkles className="w-5 h-5 text-primaryColor" />
         </div>
       </div>
-      <Input placeholder="What's happening?" />
+      {token && <Input placeholder="What's happening?" />}
+
       {tweetsLoading ? (
         <div>Loading</div>
       ) : (

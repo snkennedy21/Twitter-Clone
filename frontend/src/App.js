@@ -14,6 +14,7 @@ import { useEffect } from "react";
 import { invalidateToken, validateToken } from "./store/tokenSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
+import BottomBar from "./components/BottomBar";
 
 function App() {
   const token = useSelector((state) => state.token).token;
@@ -44,7 +45,7 @@ function App() {
 
           <Modal>{/* <Login /> */}</Modal>
         </main>
-        <SignupBar />
+        {token ? <BottomBar /> : <SignupBar />}
       </BrowserRouter>
     </React.Fragment>
   );
