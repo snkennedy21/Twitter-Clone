@@ -78,6 +78,14 @@ export const mainApi = createApi({
       },
     }),
 
+    logout: builder.mutation({
+      query: () => ({
+        url: "/logout",
+        method: "DELETE",
+        credentials: "include",
+      }),
+    }),
+
     checkIfEmailValid: builder.mutation({
       query: (email) => ({
         url: `/users/valid/email/${email}`,
@@ -103,6 +111,7 @@ export const {
   useLikeTweetMutation,
   useCreateAccountMutation,
   useLoginMutation,
+  useLogoutMutation,
   useCheckIfEmailValidMutation,
   useCheckIfHandleValidMutation,
 } = mainApi;
