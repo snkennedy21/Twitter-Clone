@@ -19,26 +19,29 @@ function Home() {
           <HiOutlineSparkles className="w-5 h-5 text-primaryColor" />
         </div>
       </div>
-      {token && <Input placeholder="What's happening?" />}
+      {token && <Input placeholder="What's happening?" tweetId={null} />}
 
       {tweetsLoading ? (
         <div>Loading</div>
       ) : (
-        tweets.map((tweet) => {
-          return (
-            <Tweet
-              key={tweet.id}
-              tweetId={tweet.id}
-              ownerHandle={tweet.owner.handle}
-              tweetOwner={`${tweet.owner.first_name} ${tweet.owner.last_name}`}
-              tweetContent={tweet.content}
-              likeCount={tweet.like_count}
-              userHasLiked={tweet.user_has_liked}
-              isChainOfTweets={false}
-              extraPadding={"3"}
-            />
-          );
-        })
+        tweets
+          .slice()
+          .reverse()
+          .map((tweet) => {
+            return (
+              <Tweet
+                key={tweet.id}
+                tweetId={tweet.id}
+                ownerHandle={tweet.owner.handle}
+                tweetOwner={`${tweet.owner.first_name} ${tweet.owner.last_name}`}
+                tweetContent={tweet.content}
+                likeCount={tweet.like_count}
+                userHasLiked={tweet.user_has_liked}
+                isChainOfTweets={false}
+                extraPadding={"3"}
+              />
+            );
+          })
       )}
     </React.Fragment>
   );

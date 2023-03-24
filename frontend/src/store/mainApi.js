@@ -31,12 +31,13 @@ export const mainApi = createApi({
     }),
 
     createTweet: builder.mutation({
-      query: () => ({
+      query: (tweetData) => ({
         url: "/tweets",
         method: "POST",
-        body: "data",
+        body: tweetData,
         credentials: "include",
       }),
+      invalidatesTags: ["Tweets", "Tweet"],
     }),
 
     likeTweet: builder.mutation({

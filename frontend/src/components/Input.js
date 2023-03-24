@@ -15,11 +15,12 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useCreateTweetMutation } from "../store/mainApi";
 
-function Input({ placeholder }) {
+function Input({ placeholder, tweetId }) {
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
   const filePickerRef = useRef(null);
+  const [createTweet] = useCreateTweetMutation();
 
   function addImageToTweet() {}
 
@@ -31,7 +32,14 @@ function Input({ placeholder }) {
     setInput(input + emoji);
   };
 
-  function sendTweet() {}
+  function createTweetHandler() {
+    const tweetData = {
+      content: input,
+      parent_tweet_id: tweetId,
+    };
+    console.log(tweetData);
+    createTweet(tweetData);
+  }
 
   return (
     <div
@@ -116,7 +124,7 @@ function Input({ placeholder }) {
           <button
             className="bg-[#1d9bf0] text-white rounded-full px-4 py-1.5 font-bold shadow-md hover:bg-[#1a8cd8] disabled:hover:bg-[#1d9bf0] disabled:opacity-50 disabled:cursor-default"
             disabled={!input.trim() && !selectedFile}
-            onClick={sendTweet}
+            onClick={createTweetHandler}
           >
             Tweet
           </button>

@@ -18,8 +18,13 @@ router = APIRouter(
 def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
 
+    name = "Joe"
+
+    print(f"{name}")
+
+
     print('hello')
-    tweets = db.query(Tweet).all()
+    tweets = db.query(Tweet).filter(Tweet.parent_tweet_id == None).all()
 
     if current_user is None:
         user_has_liked = False
