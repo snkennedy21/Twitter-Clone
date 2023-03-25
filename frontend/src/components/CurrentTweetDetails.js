@@ -7,8 +7,10 @@ import {
   HiBars3CenterLeft,
   HiOutlineBookmark,
   HiEllipsisHorizontal,
+  HiHeart,
 } from "react-icons/hi2";
 import profilePic from "../images/profile.png";
+import TweetIcon from "./TweetIcon";
 
 function CurrentTweetDetails({ tweet }) {
   return (
@@ -30,7 +32,7 @@ function CurrentTweetDetails({ tweet }) {
           <div className="flex">
             <span className="text-[#536471] mr-2">4:45 PM March 20, 2023</span>
             <span className="text-[#536471] mr-2">·</span>
-            <span className="font-bold mr-1">5</span>
+            <span className="font-bold mr-1">{tweet.view_count}</span>
             <span className="text-[#536471] mr-2">views</span>
           </div>
         </div>
@@ -48,11 +50,35 @@ function CurrentTweetDetails({ tweet }) {
         </span>
       </div>
       <div className="flex justify-around py-3">
-        <HiOutlineChatBubbleOvalLeft className="w-5 h-5" />
-        <HiOutlineArrowPath className="w-5 h-5" />
-        <HiOutlineHeart className="w-5 h-5" />
-        <HiOutlineBookmark className="w-5 h-5" />
-        <HiArrowUpTray className="w-5 h-5" />
+        <TweetIcon
+          Icon={HiOutlineChatBubbleOvalLeft}
+          backgroundColor={"bg-[#deeffb]"}
+          textColor={"text-primaryColor"}
+          number={null}
+        />
+        <TweetIcon
+          Icon={HiOutlineArrowPath}
+          backgroundColor={"bg-[#e4f2ed]"}
+          textColor={"text-[#01ba7c]"}
+          rotate={true}
+        />
+        <TweetIcon
+          Icon={tweet.userHasLiked ? HiHeart : HiOutlineHeart}
+          backgroundColor={"bg-[#f9e2ed]"}
+          textColor={"text-[#f91c80]"}
+          number={null}
+        />
+        <TweetIcon
+          Icon={HiBars3CenterLeft}
+          backgroundColor={"bg-[#deeffb]"}
+          textColor={"text-primaryColor"}
+          rotate={true}
+        />
+        <TweetIcon
+          Icon={HiArrowUpTray}
+          backgroundColor={"bg-[#deeffb]"}
+          textColor={"text-primaryColor"}
+        />
       </div>
     </div>
   );

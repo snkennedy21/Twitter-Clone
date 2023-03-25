@@ -80,6 +80,8 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
 
     owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
     like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == id).scalar()
+    reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == id).scalar()
+    view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == id).scalar()
 
     if current_user is None:
         user_has_liked = False
@@ -115,6 +117,8 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
         "created_at": tweet.created_at,
         "owner_id": tweet.owner_id,
         "like_count": like_count,
+        "reply_count": reply_count,
+        "view_count": view_count,
         "owner": owner,
         "user_has_liked": user_has_liked,
         "replies": replies,

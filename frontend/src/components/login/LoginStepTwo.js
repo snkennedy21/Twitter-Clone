@@ -15,7 +15,7 @@ function LoginStepTwo({ username, setPassword, password, login }) {
           }}
           name="password"
           value={password}
-          type="text"
+          type="password"
           placeholder="Password"
           className="border border-[#d0d0d0] placeholder-[#606060] py-5 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor"
         />
