@@ -11,6 +11,7 @@ import {
 } from "react-icons/hi2";
 import { useLikeTweetMutation } from "../store/mainApi";
 import { useNavigate } from "react-router-dom";
+import { useIncreaseViewCountMutation } from "../store/mainApi";
 
 function Tweet({
   tweetId,
@@ -18,11 +19,14 @@ function Tweet({
   tweetOwner,
   tweetContent,
   likeCount,
+  replyCount,
+  viewCount,
   userHasLiked,
   isChainOfTweets,
   extraPadding,
 }) {
   const [likeTweet] = useLikeTweetMutation();
+  const [increaseViewCount] = useIncreaseViewCountMutation();
   const navigate = useNavigate();
 
   function likeTweetHandler(e) {
@@ -35,6 +39,10 @@ function Tweet({
   }
 
   function viewTweetHandler() {
+    const tweetData = {
+      tweet_id: tweetId,
+    };
+    increaseViewCount(tweetData);
     navigate(`/tweets/${tweetId}`);
   }
 
@@ -70,6 +78,7 @@ function Tweet({
             Icon={HiOutlineChatBubbleOvalLeft}
             backgroundColor={"bg-[#deeffb]"}
             textColor={"text-primaryColor"}
+            number={replyCount}
           />
           <TweetIcon
             Icon={HiOutlineArrowPath}
@@ -90,6 +99,7 @@ function Tweet({
             backgroundColor={"bg-[#deeffb]"}
             textColor={"text-primaryColor"}
             rotate={true}
+            number={viewCount}
           />
           <TweetIcon
             Icon={HiArrowUpTray}

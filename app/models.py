@@ -16,6 +16,7 @@ class Tweet(Base):
     replies = relationship("Tweet", backref=backref('parent_tweet', remote_side=[id]))
 
 
+
 class User(Base):
     __tablename__ = "users"
 
@@ -32,4 +33,10 @@ class Like(Base):
     __tablename__ = "likes"
 
     user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
+    tweet_id = Column(Integer, ForeignKey("tweets.id", ondelete="CASCADE"), primary_key=True)
+
+
+class View(Base):
+    __tablename__ = "views"
+
     tweet_id = Column(Integer, ForeignKey("tweets.id", ondelete="CASCADE"), primary_key=True)

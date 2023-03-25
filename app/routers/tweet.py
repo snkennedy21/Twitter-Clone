@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, HTTPException, Response, Depends, APIRouter, Cookie
 from app import utils
 from app.schemas import TweetResponse, TweetCreate, TweetOut
-from app.models import Tweet, Like, User
+from app.models import Tweet, Like, User, View
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database import get_db
@@ -18,12 +18,6 @@ router = APIRouter(
 def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
 
-    name = "Joe"
-
-    print(f"{name}")
-
-
-    print('hello')
     tweets = db.query(Tweet).filter(Tweet.parent_tweet_id == None).all()
 
     if current_user is None:
@@ -32,7 +26,9 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
 
     list_of_tweets = []
     for tweet in tweets:
+        reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == tweet.id).scalar()
         like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()
+        view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == tweet.id).scalar()
         owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
 
         if current_user:
@@ -46,6 +42,8 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
             "like_count": like_count,
             "owner": owner,
             "user_has_liked": user_has_liked,
+            "reply_count": reply_count,
+            "view_count": view_count
         }
         list_of_tweets.append(tweet_dict)
 

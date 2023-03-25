@@ -77,3 +77,10 @@ class TokenData(BaseModel):
 class LikeCreated(BaseModel):
     tweet_id: int
     dir: conint(le=1)
+
+################
+# VIEW SCHEMAS #
+################
+
+class ViewCreated(BaseModel):
+    tweet_id: int

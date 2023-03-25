@@ -51,6 +51,16 @@ export const mainApi = createApi({
       invalidatesTags: ["Tweets", "Tweet"],
     }),
 
+    increaseViewCount: builder.mutation({
+      query: (data) => ({
+        url: "/view",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["Tweets"],
+    }),
+
     // ************************ //
     // AUTHENTICATION ENDPOINTS //
     // ************************ //
@@ -110,6 +120,7 @@ export const {
   useGetTweetQuery,
   useCreateTweetMutation,
   useLikeTweetMutation,
+  useIncreaseViewCountMutation,
   useCreateAccountMutation,
   useLoginMutation,
   useLogoutMutation,
