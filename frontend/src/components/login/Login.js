@@ -4,6 +4,7 @@ import { useLoginMutation } from "../../store/mainApi";
 import LoginStepOne from "./LoginStepOne";
 import LoginStepTwo from "./LoginStepTwo";
 import { validateToken } from "../../store/tokenSlice";
+import { closeModal } from "../../store/modalSlice";
 
 function Login() {
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
@@ -20,6 +21,7 @@ function Login() {
     expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
     document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;
     dispatch(validateToken());
+    dispatch(closeModal());
   }
 
   useEffect(() => {

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useCreateAccountMutation } from "../../store/mainApi";
 import { closeModal } from "../../store/modalSlice";
+import { validateToken } from "../../store/tokenSlice";
 import SignupStepOne from "./SignupStepOne";
 import SignupStepTwo from "./SignupStepTwo";
 import SignupStepThree from "./SignupStepThree";
@@ -29,6 +30,10 @@ function Signup() {
       password: password,
     };
     createAccount(signupData);
+    let expirationTime = new Date();
+    expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
+    document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;
+    dispatch(validateToken());
     dispatch(closeModal());
   }
 

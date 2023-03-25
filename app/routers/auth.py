@@ -38,7 +38,6 @@ def login(response: Response, user_credentials: OAuth2PasswordRequestForm = Depe
         samesite="none"
     )
 
-    print('hello')
 
     return {"access_token": access_token, "token_type": "bearer", "user": user}
     
