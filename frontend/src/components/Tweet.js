@@ -88,7 +88,7 @@ function Tweet({
           />
           <TweetIcon
             Icon={userHasLiked ? HiHeart : HiOutlineHeart}
-            userHasLiked={userHasLiked}
+            iconToggled={userHasLiked}
             backgroundColor={"bg-[#f9e2ed]"}
             textColor={"text-[#f91c80]"}
             clickFunction={likeTweetHandler}

@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, HTTPException, Response, Depends, APIRouter, Cookie
 from app import utils
 from app.schemas import TweetResponse, TweetCreate, TweetOut
-from app.models import Tweet, Like, User, View
+from app.models import Tweet, Like, User, View, Bookmark
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database import get_db
@@ -85,9 +85,11 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
 
     if current_user is None:
         user_has_liked = False
+        user_has_bookmarked = False
 
     if current_user:
         user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None
+        user_has_bookmarked = db.query(Bookmark).filter(Bookmark.user_id == current_user.id, Bookmark.tweet_id == tweet.id).first() is not None
     
     replies = []
     for reply in tweet.replies:
@@ -121,6 +123,7 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
         "view_count": view_count,
         "owner": owner,
         "user_has_liked": user_has_liked,
+        "user_has_bookmarked": user_has_bookmarked,
         "replies": replies,
         "parent_tweets": parent_tweets,
     }

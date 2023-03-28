@@ -61,6 +61,16 @@ export const mainApi = createApi({
       invalidatesTags: ["Tweets", "Tweet"],
     }),
 
+    bookmarkTweet: builder.mutation({
+      query: (data) => ({
+        url: "/bookmark",
+        method: "POST",
+        body: data,
+        credentials: "include",
+      }),
+      invalidatesTags: ["Tweets", "Tweet"],
+    }),
+
     // ************************ //
     // AUTHENTICATION ENDPOINTS //
     // ************************ //
@@ -120,6 +130,7 @@ export const {
   useGetTweetQuery,
   useCreateTweetMutation,
   useLikeTweetMutation,
+  useBookmarkTweetMutation,
   useIncreaseViewCountMutation,
   useCreateAccountMutation,
   useLoginMutation,

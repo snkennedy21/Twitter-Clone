@@ -7,12 +7,38 @@ import {
   HiBars3CenterLeft,
   HiOutlineBookmark,
   HiEllipsisHorizontal,
+  HiBookmark,
   HiHeart,
 } from "react-icons/hi2";
 import profilePic from "../images/profile.png";
 import TweetIcon from "./TweetIcon";
+import {
+  useBookmarkTweetMutation,
+  useLikeTweetMutation,
+} from "../store/mainApi";
+// import { HiBookmark } from "react-icons/hi";
 
 function CurrentTweetDetails({ tweet }) {
+  const [bookmarkTweet] = useBookmarkTweetMutation();
+  const [likeTweet] = useLikeTweetMutation();
+
+  function bookmarkTweetHandler() {
+    const tweetData = {
+      tweet_id: tweet.id,
+      dir: tweet.user_has_bookmarked ? 0 : 1,
+    };
+
+    bookmarkTweet(tweetData);
+  }
+
+  function likeTweetHandler() {
+    const tweetData = {
+      tweet_id: tweet.id,
+      dir: tweet.user_has_liked ? 0 : 1,
+    };
+    likeTweet(tweetData);
+  }
+
   return (
     <div className="text-blackText border-b border-greyBorder m-3 mt-0">
       <div className=" border-b border-greyBorder">
@@ -63,16 +89,19 @@ function CurrentTweetDetails({ tweet }) {
           rotate={true}
         />
         <TweetIcon
-          Icon={tweet.userHasLiked ? HiHeart : HiOutlineHeart}
+          Icon={tweet.user_has_liked ? HiHeart : HiOutlineHeart}
+          iconToggled={tweet.user_has_liked}
           backgroundColor={"bg-[#f9e2ed]"}
           textColor={"text-[#f91c80]"}
           number={null}
+          clickFunction={likeTweetHandler}
         />
         <TweetIcon
-          Icon={HiBars3CenterLeft}
+          Icon={tweet.user_has_bookmarked ? HiBookmark : HiOutlineBookmark}
+          iconToggled={tweet.user_has_bookmarked}
           backgroundColor={"bg-[#deeffb]"}
           textColor={"text-primaryColor"}
-          rotate={true}
+          clickFunction={bookmarkTweetHandler}
         />
         <TweetIcon
           Icon={HiArrowUpTray}

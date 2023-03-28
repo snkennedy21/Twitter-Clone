@@ -78,6 +78,16 @@ class LikeCreated(BaseModel):
     tweet_id: int
     dir: conint(le=1)
 
+
+####################
+# BOOKMARK SCHEMAS #
+####################
+
+class BookmarkCreated(BaseModel):
+    tweet_id: int
+    dir: conint(le=1)
+
+
 ################
 # VIEW SCHEMAS #
 ################

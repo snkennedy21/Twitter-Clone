@@ -7,7 +7,7 @@ function TweetIcon({
   rotate,
   clickFunction,
   number,
-  userHasLiked,
+  iconToggled,
 }) {
   const [isHovered, setIsHovered] = useState(false);
 
@@ -28,9 +28,9 @@ function TweetIcon({
         }`}
       >
         <Icon
-          className={`h-5 w-5 transition ${isHovered ? textColor : ""} ${
-            rotate && "-rotate-90"
-          } ${userHasLiked ? textColor : ""}`}
+          className={`h-5 w-5 transition hover:cursor-pointer ${
+            isHovered ? textColor : ""
+          } ${rotate && "-rotate-90"} ${iconToggled ? textColor : ""}`}
         />
       </div>
       <span className={`text-sm transition ${isHovered ? textColor : ""}`}>

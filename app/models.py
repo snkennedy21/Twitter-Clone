@@ -4,6 +4,7 @@ from sqlalchemy.sql.expression import null, text
 from sqlalchemy.sql.sqltypes import TIMESTAMP
 from .database import Base
 
+
 class Tweet(Base):
     __tablename__ = "tweets"
 
@@ -14,7 +15,6 @@ class Tweet(Base):
     owner = relationship("User")
     parent_tweet_id = Column(Integer, ForeignKey('tweets.id'))
     replies = relationship("Tweet", backref=backref('parent_tweet', remote_side=[id]))
-
 
 
 class User(Base):
@@ -39,4 +39,11 @@ class Like(Base):
 class View(Base):
     __tablename__ = "views"
 
+    tweet_id = Column(Integer, ForeignKey("tweets.id", ondelete="CASCADE"), primary_key=True)
+
+
+class Bookmark(Base):
+    __tablename__ = "bookmarks"
+
+    user_id = Column(Integer, ForeignKey("users.id", ondelete="CASCADE"), primary_key=True)
     tweet_id = Column(Integer, ForeignKey("tweets.id", ondelete="CASCADE"), primary_key=True)
