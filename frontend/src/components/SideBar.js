@@ -37,14 +37,14 @@ function SideBar() {
 
       {token ? (
         <div className="space-y-2.5 mt-4 mb-2.5 xl:ml-24">
-          <SidebarLink text="Search" Icon={HiOutlineHome} />
+          <SidebarLink text="Home" Icon={HiOutlineHome} />
           <SidebarLink text="Search" Icon={HiOutlineSearch} />
-          <SidebarLink text="Notifications" Icon={HiOutlineBell} />
-          <SidebarLink text="More" Icon={HiOutlineInbox} />
-          <SidebarLink text="Messages" Icon={HiOutlineBookmark} />
+          {/* <SidebarLink text="Notifications" Icon={HiOutlineBell} /> */}
+          {/* <SidebarLink text="More" Icon={HiOutlineInbox} /> */}
+          <SidebarLink text="Bookmarks" Icon={HiOutlineBookmark} />
 
-          <SidebarLink text="Lists" Icon={HiOutlineUser} />
-          <SidebarLink text="Profile" Icon={HiOutlineDotsCircleHorizontal} />
+          <SidebarLink text="Profile" Icon={HiOutlineUser} />
+          {/* <SidebarLink text="Profile" Icon={HiOutlineDotsCircleHorizontal} /> */}
         </div>
       ) : (
         <div className="space-y-2.5 mt-4 mb-2.5 xl:ml-24">

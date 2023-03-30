@@ -11,6 +11,8 @@ function ReplyTweets({ tweet }) {
         tweetOwner={`${reply.owner.first_name} ${reply.owner.last_name}`}
         tweetContent={reply.content}
         likeCount={reply.like_count}
+        replyCount={reply.reply_count}
+        viewCount={reply.view_count}
         userHasLiked={reply.user_has_liked}
         extraPadding={"3"}
       />

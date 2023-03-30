@@ -60,6 +60,8 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
     while parent_tweet:
         parent_owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == parent_tweet.owner_id).first()._asdict()
         parent_like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == parent_tweet.id).scalar()
+        parent_reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == parent_tweet.id).scalar()
+        parent_view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == parent_tweet.id).scalar()
 
         if current_user is None:
             parent_user_has_liked = False
@@ -72,6 +74,8 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
             "created_at": parent_tweet.created_at,
             "owner_id": parent_tweet.owner_id,
             "like_count": parent_like_count,
+            "reply_count": parent_reply_count,
+            "view_count": parent_view_count,
             "owner": parent_owner,
             "user_has_liked": parent_user_has_liked,
         }
@@ -101,12 +105,17 @@ def get_tweet(id: int, db: Session = Depends(get_db), access_token: str = Cookie
 
         reply_owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == reply.owner_id).first()._asdict()
         reply_like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == reply.id).scalar()
+        reply_reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == reply.id).scalar()
+        reply_view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == reply.id).scalar()
+
         reply_dict = {
             "id": reply.id,
             "content": reply.content,
             "created_at": reply.created_at,
             "owner_id": reply.owner_id,
             "like_count": reply_like_count,
+            "reply_count": reply_reply_count,
+            "view_count": reply_view_count,
             "owner": reply_owner,
             "user_has_liked": reply_user_has_liked,
         }
