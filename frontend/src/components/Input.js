@@ -15,7 +15,7 @@ import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
 import { useCreateTweetMutation } from "../store/mainApi";
 
-function Input({ placeholder, tweetId }) {
+function Input({ placeholder, tweetId, tweetModal }) {
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -43,7 +43,9 @@ function Input({ placeholder, tweetId }) {
 
   return (
     <div
-      className={`border-b border-greyBorder p-3 flex space-x-3 overflow-y-scroll `}
+      className={`${
+        tweetModal || "border-b border-greyBorder"
+      } p-3 flex space-x-3 overflow-y-scroll`}
     >
       <img
         src={profilePic}
@@ -53,7 +55,9 @@ function Input({ placeholder, tweetId }) {
       <div className="w-full divide-y divide-greyBorder">
         <div className={``}>
           <textarea
-            className="bg-transparent outline-none text-blackText text-lg placeholder-gray-500 tracking-wide w-full min-h-[50px]"
+            className={`bg-transparent outline-none text-blackText text-lg placeholder-gray-500 tracking-wide w-full ${
+              tweetModal ? "min-h-[150px]" : "min-h-[50px]"
+            }`}
             onChange={(e) => {
               setInput(e.target.value);
             }}

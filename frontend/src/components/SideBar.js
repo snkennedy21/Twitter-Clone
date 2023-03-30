@@ -12,13 +12,22 @@ import {
   HiOutlineDotsCircleHorizontal,
 } from "react-icons/hi";
 import SidebarLink from "./SidebarLink";
+import { openModal, changeModalContent } from "../store/modalSlice";
 
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 
 import UserOptions from "./UserOptions";
 
 function SideBar() {
+  const dispatch = useDispatch();
+
+  function openModalHandler(e) {
+    const buttonText = e.target.textContent;
+    dispatch(changeModalContent(buttonText));
+    dispatch(openModal());
+  }
+
   const token = useSelector((state) => state.token).token;
   return (
     <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[340px] p-2 fixed h-full">
@@ -49,7 +58,10 @@ function SideBar() {
           <button className="bg-primaryColor p-4 rounded-full xl:hidden mt-4">
             <HiOutlinePencil className="w-5 h-5 text-white" />
           </button>
-          <button className="hidden xl:inline ml-auto bg-primaryColor text-white rounded-full w-56 h-[52px] text-lg font-bold shadow-md hover:bg-[#1a8cd8]">
+          <button
+            onClick={openModalHandler}
+            className="hidden xl:inline ml-auto bg-primaryColor text-white rounded-full w-56 h-[52px] text-lg font-bold shadow-md hover:bg-[#1a8cd8]"
+          >
             Tweet
           </button>
 

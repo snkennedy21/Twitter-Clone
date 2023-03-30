@@ -6,15 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { closeModal } from "../store/modalSlice";
 import Login from "./login/Login";
 import Signup from "./signup/Signup";
-import Input from "./Input";
 
-function Modal({ children }) {
-  const isModalOpen = useSelector((state) => state.modal.isModalOpen);
-  const modalContent = useSelector((state) => state.modal.modalContent);
-  const dispatch = useDispatch();
-
+function TweetModal({ children }) {
   function closeModalHandler() {
-    dispatch(closeModal());
+    console.log("hello");
   }
 
   let modalStuff = "";
@@ -23,8 +18,6 @@ function Modal({ children }) {
     modalStuff = <Login />;
   } else if (modalContent === "Sign up") {
     modalStuff = <Signup />;
-  } else if (modalContent === "Tweet") {
-    modalStuff = <Input tweetModal={true} />;
   }
 
   return (
@@ -35,15 +28,11 @@ function Modal({ children }) {
         }`}
       ></div>
       <div
-        className={`z-50 w-full absolute left-0 top-0 flex justify-center items-center h-screen ${
+        className={`z-50 w-full absolute flex justify-center items-center h-screen ${
           isModalOpen ? "" : "hidden"
         }`}
       >
-        <div
-          className={`bg-white w-full h-screen sm:max-h-[600px] relative sm:rounded-2xl sm:w-[600px] z-40 overflow-hidden overflow-y-scroll pb-4 ${
-            modalContent === "Tweet" ? "sm:h-min" : "sm:h-5/6"
-          }`}
-        >
+        <div className="bg-white w-full h-screen sm:h-5/6 sm:max-h-[600px] relative sm:rounded-2xl sm:w-[600px] z-40 overflow-hidden overflow-y-scroll pb-4">
           <div className="sticky top-0 w-full flex justify-center z-50 bg-white py-3 pl-3">
             <HiXMark
               onClick={closeModalHandler}
