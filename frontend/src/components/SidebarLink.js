@@ -4,7 +4,7 @@ function SidebarLink({ Icon, text, active }) {
   const navigate = useNavigate();
 
   function navigateHandler() {
-    navigate(`/${text}`);
+    navigate(`/${text.toLowerCase()}`);
   }
 
   return (

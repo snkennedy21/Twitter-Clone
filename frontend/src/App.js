@@ -12,6 +12,7 @@ import { invalidateToken, validateToken } from "./store/tokenSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
 import BottomBar from "./components/BottomBar";
+import ProfilePage from "./components/ProfilePage";
 
 function App() {
   const token = useSelector((state) => state.token).token;
@@ -34,6 +35,7 @@ function App() {
           <Feed>
             <Routes>
               <Route path="/home" element={<Home />} />
+              <Route path="/profile" element={<ProfilePage />} />
               <Route path="/tweets/:tweetId" element={<CurrentTweet />} />
             </Routes>
           </Feed>
