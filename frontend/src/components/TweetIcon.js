@@ -33,7 +33,11 @@ function TweetIcon({
           } ${rotate && "-rotate-90"} ${iconToggled ? textColor : ""}`}
         />
       </div>
-      <span className={`text-sm transition ${isHovered ? textColor : ""}`}>
+      <span
+        className={`text-sm transition ${isHovered ? textColor : ""} ${
+          iconToggled ? textColor : ""
+        }`}
+      >
         {number}
       </span>
     </div>

@@ -23,8 +23,7 @@ function SideBar() {
   const dispatch = useDispatch();
 
   function openModalHandler(e) {
-    console.log("hello");
-    const buttonText = e.target.value;
+    const buttonText = e.currentTarget.value;
     dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }

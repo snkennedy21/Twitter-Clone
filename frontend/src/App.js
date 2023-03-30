@@ -1,9 +1,6 @@
 import "./App.css";
-import Test from "./components/Test";
 import Home from "./components/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { HiBeaker } from "react-icons/hi";
-import profile from "./images/profile.png";
 import SideBar from "./components/SideBar";
 import Feed from "./components/Feed";
 import Modal from "./components/Modal";
@@ -29,7 +26,6 @@ function App() {
     }
   });
 
-  console.log("User Is Logged In:", token);
   return (
     <React.Fragment>
       <BrowserRouter>
@@ -38,7 +34,6 @@ function App() {
           <Feed>
             <Routes>
               <Route path="/home" element={<Home />} />
-              {/* <Route path="/home" element={<Test />} /> */}
               <Route path="/tweets/:tweetId" element={<CurrentTweet />} />
             </Routes>
           </Feed>

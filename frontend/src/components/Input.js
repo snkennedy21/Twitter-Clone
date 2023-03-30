@@ -39,6 +39,7 @@ function Input({ placeholder, tweetId, tweetModal }) {
     };
     console.log(tweetData);
     createTweet(tweetData);
+    setInput("");
   }
 
   return (
