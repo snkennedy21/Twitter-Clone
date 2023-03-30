@@ -6,7 +6,7 @@ export const mainApi = createApi({
     baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
 
-  tagTypes: ["Tweet", "Tweet", "Comment", "User"],
+  tagTypes: ["Tweet", "Tweet", "Comment", "User", "UserTweets"],
 
   endpoints: (builder) => ({
     // *************** //
@@ -48,7 +48,7 @@ export const mainApi = createApi({
         credentials: "include",
         contentType: "application/json",
       }),
-      invalidatesTags: ["Tweets", "Tweet"],
+      invalidatesTags: ["Tweets", "Tweet", "UserTweets"],
     }),
 
     increaseViewCount: builder.mutation({
@@ -75,11 +75,26 @@ export const mainApi = createApi({
     // USER ENDPOINTS //
     // ************** //
     getUserData: builder.query({
-      query: (userId) => ({
-        url: `/users/${userId}`,
-        method: "GET",
-        credentials: "include",
-      }),
+      query: (userId) => {
+        console.log(userId);
+        return {
+          url: `/users/${userId}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+    }),
+
+    getUserTweets: builder.query({
+      query: (userId) => {
+        console.log(userId);
+        return {
+          url: `/users/${userId}/tweets`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
+      providesTags: ["UserTweets"],
     }),
 
     // ************************ //
@@ -144,6 +159,7 @@ export const {
   useBookmarkTweetMutation,
   useIncreaseViewCountMutation,
   useGetUserDataQuery,
+  useGetUserTweetsQuery,
   useCreateAccountMutation,
   useLoginMutation,
   useLogoutMutation,
