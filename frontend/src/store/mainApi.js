@@ -71,6 +71,17 @@ export const mainApi = createApi({
       invalidatesTags: ["Tweets", "Tweet"],
     }),
 
+    // ************** //
+    // USER ENDPOINTS //
+    // ************** //
+    getUserData: builder.query({
+      query: (userId) => ({
+        url: `/users/${userId}`,
+        method: "GET",
+        credentials: "include",
+      }),
+    }),
+
     // ************************ //
     // AUTHENTICATION ENDPOINTS //
     // ************************ //
@@ -132,6 +143,7 @@ export const {
   useLikeTweetMutation,
   useBookmarkTweetMutation,
   useIncreaseViewCountMutation,
+  useGetUserDataQuery,
   useCreateAccountMutation,
   useLoginMutation,
   useLogoutMutation,

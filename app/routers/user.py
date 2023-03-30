@@ -13,6 +13,7 @@ router = APIRouter(
     tags=["Users"]
 )
 
+
 @router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserResponse)
 def create_user(user: UserCreate, response: Response,  db: Session = Depends(get_db)):
     print(user)
