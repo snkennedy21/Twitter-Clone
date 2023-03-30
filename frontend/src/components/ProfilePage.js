@@ -1,17 +1,24 @@
 import React from "react";
 import { HiArrowLeft } from "react-icons/hi2";
-import { useGetUserDataQuery, useGetUserTweetsQuery } from "../store/mainApi";
+import {
+  useGetUserDataQuery,
+  useGetUserTweetsQuery,
+  useUpdateUserMutation,
+} from "../store/mainApi";
 import profilePic from "../images/profile.png";
 import Tweet from "./Tweet";
 
 function ProfilePage() {
+  const [updateUser] = useUpdateUserMutation();
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
     JSON.parse(localStorage.getItem("currentUser")).id
   );
   const { data: userTweets, isLoading: userTweetsLoading } =
     useGetUserTweetsQuery(JSON.parse(localStorage.getItem("currentUser")).id);
 
-  console.log(userTweets);
+  function updateUserHandler() {
+    updateUser(JSON.parse(localStorage.getItem("currentUser")).id);
+  }
 
   if (userDataLoading || userTweetsLoading) return <div>Loading</div>;
 
@@ -37,7 +44,10 @@ function ProfilePage() {
           />
         </div>
         <div className="flex w-full justify-end py-3 px-4">
-          <button className="text-black border border-[#cfd9de] px-4 py-1 rounded-full font-semibold">
+          <button
+            onClick={updateUserHandler}
+            className="text-black border border-[#cfd9de] px-4 py-1 rounded-full font-semibold"
+          >
             Edit profile
           </button>
         </div>

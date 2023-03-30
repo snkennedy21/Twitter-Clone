@@ -14,6 +14,11 @@ router = APIRouter(
     tags=["Users"]
 )
 
+@router.put('/{id}')
+def update_user(id, response: Response, db: Session = Depends(get_db)):
+    print('hello')
+    print(id)
+
 
 @router.get('/{id}/tweets')
 def get_user_tweets(id, response: Response, db: Session = Depends(get_db), access_token: str = Cookie(None)):

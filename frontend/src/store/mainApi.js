@@ -85,6 +85,14 @@ export const mainApi = createApi({
       },
     }),
 
+    updateUser: builder.mutation({
+      query: (userId) => ({
+        url: `/users/${userId}`,
+        method: "PUT",
+        credentials: "include",
+      }),
+    }),
+
     getUserTweets: builder.query({
       query: (userId) => {
         console.log(userId);
@@ -159,6 +167,7 @@ export const {
   useBookmarkTweetMutation,
   useIncreaseViewCountMutation,
   useGetUserDataQuery,
+  useUpdateUserMutation,
   useGetUserTweetsQuery,
   useCreateAccountMutation,
   useLoginMutation,
