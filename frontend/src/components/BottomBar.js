@@ -16,14 +16,19 @@ function BottomBar() {
   const dispatch = useDispatch();
 
   function openModalHandler(e) {
-    const buttonText = e.target.textContent;
+    const buttonText = e.currentTarget.value;
+    console.log(buttonText);
     dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }
 
   return (
     <div className="sm:hidden">
-      <button className="fixed bottom-16 right-6 bg-primaryColor p-4 rounded-full xl:hidden mt-4">
+      <button
+        onClick={openModalHandler}
+        value="Tweet"
+        className="fixed bottom-16 right-6 bg-primaryColor p-4 rounded-full xl:hidden mt-4"
+      >
         <HiOutlinePencil className="w-5 h-5 text-white" />
       </button>
       <div className="w-full bg-white border-t border-greyBorder fixed bottom-0 p-3 sm:py-2">

@@ -23,7 +23,8 @@ function SideBar() {
   const dispatch = useDispatch();
 
   function openModalHandler(e) {
-    const buttonText = e.target.textContent;
+    console.log("hello");
+    const buttonText = e.target.value;
     dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }
@@ -55,11 +56,16 @@ function SideBar() {
 
       {token && (
         <React.Fragment>
-          <button className="bg-primaryColor p-4 rounded-full xl:hidden mt-4">
+          <button
+            onClick={openModalHandler}
+            value="Tweet"
+            className="bg-primaryColor p-4 rounded-full xl:hidden mt-4 hover:bg-[#1a8cd8]"
+          >
             <HiOutlinePencil className="w-5 h-5 text-white" />
           </button>
           <button
             onClick={openModalHandler}
+            value="Tweet"
             className="hidden xl:inline ml-auto bg-primaryColor text-white rounded-full w-56 h-[52px] text-lg font-bold shadow-md hover:bg-[#1a8cd8]"
           >
             Tweet
