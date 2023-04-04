@@ -7,6 +7,7 @@ import { closeModal } from "../store/modalSlice";
 import Login from "./login/Login";
 import Signup from "./signup/Signup";
 import Input from "./Input";
+import EditProfileForm from "./EditProfileForm";
 
 function Modal({ children }) {
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);
@@ -25,6 +26,8 @@ function Modal({ children }) {
     modalStuff = <Signup />;
   } else if (modalContent === "Tweet") {
     modalStuff = <Input tweetModal={true} />;
+  } else if (modalContent === "EditProfileForm") {
+    modalStuff = <EditProfileForm />;
   }
 
   return (

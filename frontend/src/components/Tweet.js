@@ -17,6 +17,7 @@ function Tweet({
   tweetId,
   ownerHandle,
   tweetOwner,
+  ownerPhoto,
   tweetContent,
   likeCount,
   replyCount,
@@ -54,7 +55,7 @@ function Tweet({
       }`}
     >
       <div className="flex flex-col w-12">
-        <img src={profilePic} alt="" className="h-11 w-11 rounded-full" />
+        <img src={ownerPhoto} alt="" className="h-11 w-11 rounded-full" />
         <div
           className={`${
             isChainOfTweets ? "w-[2px] h-full bg-[#c9c9c9] ml-5 my-1" : ""

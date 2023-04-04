@@ -27,6 +27,7 @@ class User(Base):
     last_name = Column(String, nullable=False)
     password = Column(String, nullable=False)
     created_at = Column(TIMESTAMP(timezone=True), server_default=text('now()'), nullable=False)
+    photo_url = Column(String, nullable=True)
 
 
 class Like(Base):

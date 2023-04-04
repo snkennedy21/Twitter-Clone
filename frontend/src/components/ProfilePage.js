@@ -7,18 +7,25 @@ import {
 } from "../store/mainApi";
 import profilePic from "../images/profile.png";
 import Tweet from "./Tweet";
+import { useDispatch } from "react-redux";
+import { openModal, changeModalContent } from "../store/modalSlice";
 
 function ProfilePage() {
-  const [updateUser] = useUpdateUserMutation();
+  const dispatch = useDispatch();
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
     JSON.parse(localStorage.getItem("currentUser")).id
   );
+  console.log(JSON.parse(localStorage.getItem("currentUser")).id);
   const { data: userTweets, isLoading: userTweetsLoading } =
     useGetUserTweetsQuery(JSON.parse(localStorage.getItem("currentUser")).id);
 
-  function updateUserHandler() {
-    updateUser(JSON.parse(localStorage.getItem("currentUser")).id);
+  function openModalHandler(e) {
+    const buttonText = e.target.value;
+    dispatch(changeModalContent(buttonText));
+    dispatch(openModal());
   }
+
+  console.log(userData);
 
   if (userDataLoading || userTweetsLoading) return <div>Loading</div>;
 
@@ -39,13 +46,14 @@ function ProfilePage() {
         </div>
         <div className="bg-[#cfd9de] w-full h-48 relative">
           <img
-            src={profilePic}
+            src={userData.photo_url}
             className="w-36 h-36 rounded-full absolute bottom-0 left-4 translate-y-1/2 border-white border-4"
           />
         </div>
         <div className="flex w-full justify-end py-3 px-4">
           <button
-            onClick={updateUserHandler}
+            onClick={openModalHandler}
+            value="EditProfileForm"
             className="text-black border border-[#cfd9de] px-4 py-1 rounded-full font-semibold"
           >
             Edit profile
@@ -57,12 +65,14 @@ function ProfilePage() {
         </figure>
       </div>
       {userTweets.map((tweet) => {
+        console.log(tweet)
         return (
           <Tweet
             key={tweet.id}
             tweetId={tweet.id}
             ownerHandle={tweet.owner.handle}
             tweetOwner={`${tweet.owner.first_name} ${tweet.owner.last_name}`}
+            ownerPhoto={tweet.owner.photo_url}
             tweetContent={tweet.content}
             likeCount={tweet.like_count}
             replyCount={tweet.reply_count}

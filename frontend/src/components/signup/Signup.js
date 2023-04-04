@@ -21,7 +21,7 @@ function Signup() {
   const [createAccount] = useCreateAccountMutation();
   const dispatch = useDispatch();
 
-  function createAccountHandler() {
+  async function createAccountHandler() {
     const signupData = {
       handle: handle,
       email: email,
@@ -29,7 +29,10 @@ function Signup() {
       last_name: lastName,
       password: password,
     };
-    createAccount(signupData);
+    const payload = await createAccount(signupData);
+    console.log(payload);
+    localStorage.setItem("currentUserId", JSON.stringify(payload.data.user.id));
+    console.log(payload);
     let expirationTime = new Date();
     expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
     document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;

@@ -86,11 +86,20 @@ export const mainApi = createApi({
     }),
 
     updateUser: builder.mutation({
-      query: (userId) => ({
-        url: `/users/${userId}`,
-        method: "PUT",
-        credentials: "include",
-      }),
+      query: (data) => {
+        const userId = JSON.parse(localStorage.getItem("currentUser")).id;
+        let formData = null;
+        if (data instanceof HTMLElement) {
+          formData = new FormData(data);
+        }
+        return {
+          url: `/users/${userId}`,
+          method: "PUT",
+          body: formData,
+          credentials: "include",
+          contentType: "multipart/form-data",
+        };
+      },
     }),
 
     getUserTweets: builder.query({
@@ -139,6 +148,7 @@ export const mainApi = createApi({
         method: "DELETE",
         credentials: "include",
       }),
+      invalidatesTags: ["Tweets", "Tweet"],
     }),
 
     checkIfEmailValid: builder.mutation({

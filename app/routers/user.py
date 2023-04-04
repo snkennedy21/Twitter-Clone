@@ -1,13 +1,22 @@
-from fastapi import FastAPI, status, HTTPException, Depends, APIRouter, Response, Cookie
+from fastapi import FastAPI, status, HTTPException, Depends, APIRouter, Response, Cookie, File, UploadFile, Form
 from app.schemas import UserCreate, UserResponse
 from app import utils
 from app.models import User, Tweet, Like, View
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database import get_db
-import re
+import re, boto3
 from typing import Optional
 from .. import oauth2
+from dotenv import load_dotenv
+from app.config import settings
+
+
+load_dotenv()
+
+AWS_ACCESS_KEY = settings.AWS_ACCESS_KEY
+AWS_SECRET_KEY = settings.AWS_SECRET_KEY
+S3_BUCKET_NAME = settings.S3_BUCKET_NAME
 
 router = APIRouter(
     prefix="/users",
@@ -15,9 +24,29 @@ router = APIRouter(
 )
 
 @router.put('/{id}')
-def update_user(id, response: Response, db: Session = Depends(get_db)):
-    print('hello')
-    print(id)
+def update_user(handle: str = Form(), file: UploadFile = File(...), db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+    print(AWS_ACCESS_KEY)
+    print(AWS_SECRET_KEY)
+    print(S3_BUCKET_NAME)
+
+    print(handle)
+
+    url = current_user.photo_url
+    if file.filename != '':
+        s3 = boto3.client(
+            "s3",
+            aws_access_key_id = AWS_ACCESS_KEY,
+            aws_secret_access_key = AWS_SECRET_KEY
+        )
+        file_name = f"{handle}_{file.filename}"
+        s3.upload_fileobj(file.file, S3_BUCKET_NAME, file_name)
+        url = f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{file_name}"
+
+    current_user.photo_url = url
+    current_user.handle = handle
+    db.commit()
+
+    return {"Message": "Successfully udated user info"}
 
 
 @router.get('/{id}/tweets')
@@ -33,7 +62,7 @@ def get_user_tweets(id, response: Response, db: Session = Depends(get_db), acces
         reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == tweet.id).scalar()
         like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()
         view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == tweet.id).scalar()
-        owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
+        owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name, User.photo_url).filter(User.id == tweet.owner_id).first()._asdict()
 
         if current_user:
             user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None
@@ -55,7 +84,7 @@ def get_user_tweets(id, response: Response, db: Session = Depends(get_db), acces
 
 
 
-@router.post("/", status_code=status.HTTP_201_CREATED, response_model=UserResponse)
+@router.post("/", status_code=status.HTTP_201_CREATED)
 def create_user(user: UserCreate, response: Response,  db: Session = Depends(get_db)):
     print(user)
     
@@ -78,7 +107,7 @@ def create_user(user: UserCreate, response: Response,  db: Session = Depends(get
         samesite="none"
     )
    
-    return new_user
+    return {"access_token": access_token, "token_type": "bearer", "user": new_user}
 
 
 @router.get("/{id}", response_model=UserResponse)

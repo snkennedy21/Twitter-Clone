@@ -20,6 +20,7 @@ class UserResponse(BaseModel):
     first_name: str
     last_name: str
     email: EmailStr
+    photo_url: Optional[str] = None
 
     class Config:
         orm_mode = True

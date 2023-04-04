@@ -14,6 +14,7 @@ function UserOptions() {
   function logoutHandler() {
     document.cookie = `session=; max-age=-1; path=/`;
     dispatch(invalidateToken());
+    localStorage.removeItem("currentUserId");
     logout();
   }
 

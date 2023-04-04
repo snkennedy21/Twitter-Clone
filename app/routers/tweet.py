@@ -29,7 +29,7 @@ def get_tweets(db: Session = Depends(get_db), access_token: str = Cookie(None)):
         reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == tweet.id).scalar()
         like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()
         view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == tweet.id).scalar()
-        owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name).filter(User.id == tweet.owner_id).first()._asdict()
+        owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name, User.photo_url).filter(User.id == tweet.owner_id).first()._asdict()
 
         if current_user:
             user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None
