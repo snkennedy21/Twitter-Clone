@@ -83,6 +83,7 @@ export const mainApi = createApi({
           credentials: "include",
         };
       },
+      providesTags: ["User"],
     }),
 
     updateUser: builder.mutation({
@@ -100,6 +101,7 @@ export const mainApi = createApi({
           contentType: "multipart/form-data",
         };
       },
+      invalidatesTags: ["UserTweets", "User"],
     }),
 
     getUserTweets: builder.query({
