@@ -18,7 +18,6 @@ function Login() {
     e.preventDefault();
     const payload = await login(e.target);
     localStorage.setItem("currentUserId", JSON.stringify(payload.data.user.id));
-    console.log(payload);
     let expirationTime = new Date();
     expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
     document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;

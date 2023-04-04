@@ -8,9 +8,7 @@ import Login from "./login/Login";
 import Signup from "./signup/Signup";
 
 function TweetModal({ children }) {
-  function closeModalHandler() {
-    console.log("hello");
-  }
+  function closeModalHandler() {}
 
   let modalStuff = "";
 

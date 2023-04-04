@@ -30,9 +30,7 @@ function Signup() {
       password: password,
     };
     const payload = await createAccount(signupData);
-    console.log(payload);
     localStorage.setItem("currentUserId", JSON.stringify(payload.data.user.id));
-    console.log(payload);
     let expirationTime = new Date();
     expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
     document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;

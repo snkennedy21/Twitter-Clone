@@ -9,7 +9,6 @@ function Home() {
   const { data: tweets, isLoading: tweetsLoading } = useGetAllTweetsQuery();
   const token = useSelector((state) => state.token).token;
 
-  console.log(tweets);
 
   return (
     <React.Fragment>
@@ -31,14 +30,7 @@ function Home() {
             return (
               <Tweet
                 key={tweet.id}
-                tweetId={tweet.id}
-                ownerHandle={tweet.owner.handle}
-                tweetOwner={`${tweet.owner.first_name} ${tweet.owner.last_name}`}
-                tweetContent={tweet.content}
-                likeCount={tweet.like_count}
-                replyCount={tweet.reply_count}
-                viewCount={tweet.view_count}
-                userHasLiked={tweet.user_has_liked}
+                tweet={tweet}
                 isChainOfTweets={false}
                 extraPadding={"3"}
               />

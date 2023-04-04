@@ -44,7 +44,7 @@ function CurrentTweetDetails({ tweet }) {
       <div className=" border-b border-greyBorder">
         <div className="flex gap-3 mb-4">
           <img
-            src={profilePic}
+            src={tweet.owner.photo_url}
             alt=""
             className="h-11 w-11 rounded-full cursor-pointer"
           />

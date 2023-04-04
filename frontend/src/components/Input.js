@@ -1,21 +1,20 @@
 import profilePic from "../images/profile.png";
 import { useState, useRef } from "react";
 import {
-  HiCalendar,
-  HiChartBar,
-  HiEmojiHappy,
   HiOutlineCalendar,
   HiOutlineChartBar,
   HiOutlineEmojiHappy,
   HiOutlinePhotograph,
-  HiOutlineXCircle,
   HiXCircle,
 } from "react-icons/hi";
 import data from "@emoji-mart/data";
 import Picker from "@emoji-mart/react";
-import { useCreateTweetMutation } from "../store/mainApi";
+import { useCreateTweetMutation, useGetUserDataQuery } from "../store/mainApi";
 
 function Input({ placeholder, tweetId, tweetModal }) {
+  const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
+    JSON.parse(localStorage.getItem("currentUser")).id
+  );
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
   const [showEmojis, setShowEmojis] = useState(false);
@@ -37,7 +36,6 @@ function Input({ placeholder, tweetId, tweetModal }) {
       content: input,
       parent_tweet_id: tweetId,
     };
-    console.log(tweetData);
     createTweet(tweetData);
     setInput("");
   }
@@ -48,11 +46,16 @@ function Input({ placeholder, tweetId, tweetModal }) {
         tweetModal || "border-b border-greyBorder"
       } p-3 flex space-x-3 overflow-y-scroll`}
     >
-      <img
-        src={profilePic}
-        alt=""
-        className="h-11 w-11 rounded-full cursor-pointer"
-      />
+      {userDataLoading ? (
+        <div>Loading</div>
+      ) : (
+        <img
+          src={userData.photo_url}
+          alt=""
+          className="h-11 w-11 rounded-full cursor-pointer"
+        />
+      )}
+
       <div className="w-full divide-y divide-greyBorder">
         <div className={``}>
           <textarea

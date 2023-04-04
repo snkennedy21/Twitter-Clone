@@ -15,7 +15,6 @@ function ProfilePage() {
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
     JSON.parse(localStorage.getItem("currentUser")).id
   );
-  console.log(JSON.parse(localStorage.getItem("currentUser")).id);
   const { data: userTweets, isLoading: userTweetsLoading } =
     useGetUserTweetsQuery(JSON.parse(localStorage.getItem("currentUser")).id);
 
@@ -24,8 +23,6 @@ function ProfilePage() {
     dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }
-
-  console.log(userData);
 
   if (userDataLoading || userTweetsLoading) return <div>Loading</div>;
 
@@ -65,19 +62,10 @@ function ProfilePage() {
         </figure>
       </div>
       {userTweets.map((tweet) => {
-        console.log(tweet)
         return (
           <Tweet
             key={tweet.id}
-            tweetId={tweet.id}
-            ownerHandle={tweet.owner.handle}
-            tweetOwner={`${tweet.owner.first_name} ${tweet.owner.last_name}`}
-            ownerPhoto={tweet.owner.photo_url}
-            tweetContent={tweet.content}
-            likeCount={tweet.like_count}
-            replyCount={tweet.reply_count}
-            viewCount={tweet.view_count}
-            userHasLiked={tweet.user_has_liked}
+            tweet={tweet}
             isChainOfTweets={false}
             extraPadding={"3"}
           />

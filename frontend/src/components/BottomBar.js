@@ -17,7 +17,6 @@ function BottomBar() {
 
   function openModalHandler(e) {
     const buttonText = e.currentTarget.value;
-    console.log(buttonText);
     dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }

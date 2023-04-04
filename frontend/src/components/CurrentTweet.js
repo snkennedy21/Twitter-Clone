@@ -17,7 +17,6 @@ function CurrentTweet() {
   const { data: tweet, isLoading: tweetsLoading } = useGetTweetQuery(tweetId);
   const navigate = useNavigate();
 
-  console.log(tweet);
 
   function returnToHome() {
     navigate("/home");

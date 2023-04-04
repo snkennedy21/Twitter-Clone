@@ -76,7 +76,6 @@ export const mainApi = createApi({
     // ************** //
     getUserData: builder.query({
       query: (userId) => {
-        console.log(userId);
         return {
           url: `/users/${userId}`,
           method: "GET",
@@ -106,7 +105,6 @@ export const mainApi = createApi({
 
     getUserTweets: builder.query({
       query: (userId) => {
-        console.log(userId);
         return {
           url: `/users/${userId}/tweets`,
           method: "GET",
