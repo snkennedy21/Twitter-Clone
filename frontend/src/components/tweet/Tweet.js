@@ -1,4 +1,3 @@
-import profilePic from "../images/profile.png";
 import TweetIcon from "./TweetIcon";
 import {
   HiOutlineChatBubbleOvalLeft,
@@ -9,10 +8,10 @@ import {
   HiBars3CenterLeft,
   HiEllipsisHorizontal,
 } from "react-icons/hi2";
-import { useLikeTweetMutation } from "../store/mainApi";
+import { useLikeTweetMutation } from "../../store/mainApi";
 import { useNavigate } from "react-router-dom";
-import { useIncreaseViewCountMutation } from "../store/mainApi";
-import blankProfilePicture from "../images/blank-profile-picture.png";
+import { useIncreaseViewCountMutation } from "../../store/mainApi";
+import blankProfilePicture from "../../assets/blank-profile-picture.png";
 
 function Tweet({ tweet, isChainOfTweets, extraPadding }) {
   const [likeTweet] = useLikeTweetMutation();

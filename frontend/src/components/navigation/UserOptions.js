@@ -1,10 +1,10 @@
 import { useState } from "react";
 import React from "react";
-import blankProfilePicture from "../images/blank-profile-picture.png";
+import blankProfilePicture from "../../assets/blank-profile-picture.png";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useDispatch } from "react-redux";
-import { invalidateToken } from "../store/tokenSlice";
-import { useLogoutMutation, useGetUserDataQuery } from "../store/mainApi";
+import { invalidateToken } from "../../store/tokenSlice";
+import { useLogoutMutation, useGetUserDataQuery } from "../../store/mainApi";
 
 function UserOptions() {
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(

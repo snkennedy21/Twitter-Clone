@@ -10,12 +10,12 @@ import {
   HiBookmark,
   HiHeart,
 } from "react-icons/hi2";
-import blankProfilePicture from "../images/blank-profile-picture.png";
-import TweetIcon from "./TweetIcon";
+import blankProfilePicture from "../../assets/blank-profile-picture.png";
+import TweetIcon from "../../components/tweet/TweetIcon";
 import {
   useBookmarkTweetMutation,
   useLikeTweetMutation,
-} from "../store/mainApi";
+} from "../../store/mainApi";
 // import { HiBookmark } from "react-icons/hi";
 
 function CurrentTweetDetails({ tweet }) {

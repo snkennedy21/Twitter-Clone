@@ -1,7 +1,7 @@
 import Signup from "./Signup";
 import SignupInput from "./SignupInput";
 import { useState } from "react";
-import { useCheckIfHandleValidMutation } from "../../store/mainApi";
+import { useCheckIfHandleValidMutation } from "../../../store/mainApi";
 
 function SignupStepThree({ changeSignupStep, handle, setHandle }) {
   const [checkIfHandleValid] = useCheckIfHandleValidMutation();

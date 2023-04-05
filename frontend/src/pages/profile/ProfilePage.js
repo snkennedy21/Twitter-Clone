@@ -4,11 +4,11 @@ import {
   useGetUserDataQuery,
   useGetUserTweetsQuery,
   useUpdateUserMutation,
-} from "../store/mainApi";
-import blankProfilePicture from "../images/blank-profile-picture.png";
-import Tweet from "./Tweet";
+} from "../../store/mainApi";
+import blankProfilePicture from "../../assets/blank-profile-picture.png";
+import Tweet from "../../components/tweet/Tweet";
 import { useDispatch } from "react-redux";
-import { openModal, changeModalContent } from "../store/modalSlice";
+import { openModal, changeModalContent } from "../../store/modalSlice";
 
 function ProfilePage() {
   const dispatch = useDispatch();

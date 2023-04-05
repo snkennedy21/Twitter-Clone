@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 
-import { openModal, changeModalContent } from "../store/modalSlice";
+import { openModal, changeModalContent } from "../../store/modalSlice";
 
 function SignupBar() {
   const dispatch = useDispatch();

@@ -1,7 +1,6 @@
-import { HiOutlineSparkles } from "react-icons/hi";
-import Input from "./Input";
-import Tweet from "./Tweet";
-import { useGetTweetQuery } from "../store/mainApi";
+import Input from "../../components/Input";
+import Tweet from "../../components/tweet/Tweet";
+import { useGetTweetQuery } from "../../store/mainApi";
 import React from "react";
 import { useSelector } from "react-redux";
 import { HiArrowLeft } from "react-icons/hi2";
@@ -16,7 +15,6 @@ function CurrentTweet() {
   const { tweetId } = useParams();
   const { data: tweet, isLoading: tweetsLoading } = useGetTweetQuery(tweetId);
   const navigate = useNavigate();
-
 
   function returnToHome() {
     navigate("/home");

@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useLoginMutation } from "../../store/mainApi";
+import { useLoginMutation } from "../../../store/mainApi";
 import LoginStepOne from "./LoginStepOne";
 import LoginStepTwo from "./LoginStepTwo";
-import { validateToken } from "../../store/tokenSlice";
-import { closeModal } from "../../store/modalSlice";
+import { validateToken } from "../../../store/tokenSlice";
+import { closeModal } from "../../../store/modalSlice";
 
 function Login() {
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);

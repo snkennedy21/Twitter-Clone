@@ -1,7 +1,7 @@
 import { HiOutlineSparkles } from "react-icons/hi";
-import Input from "./Input";
-import Tweet from "./Tweet";
-import { useGetAllTweetsQuery } from "../store/mainApi";
+import Input from "../../components/Input";
+import Tweet from "../../components/tweet/Tweet";
+import { useGetAllTweetsQuery } from "../../store/mainApi";
 import React from "react";
 import { useSelector } from "react-redux";
 

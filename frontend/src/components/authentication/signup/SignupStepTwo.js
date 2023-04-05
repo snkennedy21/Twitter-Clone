@@ -1,4 +1,4 @@
-import { useCheckIfEmailValidMutation } from "../../store/mainApi";
+import { useCheckIfEmailValidMutation } from "../../../store/mainApi";
 import { useLazyQuery } from "@reduxjs/toolkit/query";
 import { useState } from "react";
 import finalPropsSelectorFactory from "react-redux/es/connect/selectorFactory";

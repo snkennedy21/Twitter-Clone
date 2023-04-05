@@ -3,11 +3,11 @@ import { useState, useEffect } from "react";
 import { HiXMark } from "react-icons/hi2";
 import { FaTwitter } from "react-icons/fa";
 import { useSelector, useDispatch } from "react-redux";
-import { closeModal } from "../store/modalSlice";
-import Login from "./login/Login";
-import Signup from "./signup/Signup";
-import Input from "./Input";
-import EditProfileForm from "./EditProfileForm";
+import { closeModal } from "../../store/modalSlice";
+import Login from "../authentication/login/Login";
+import Signup from "../authentication/signup/Signup";
+import Input from "../Input";
+import EditProfileForm from "../../pages/profile/EditProfileForm";
 
 function Modal({ children }) {
   const isModalOpen = useSelector((state) => state.modal.isModalOpen);

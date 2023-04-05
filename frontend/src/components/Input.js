@@ -1,4 +1,4 @@
-import blankProfilePicture from "../images/blank-profile-picture.png";
+import blankProfilePicture from "../assets/blank-profile-picture.png";
 import { useState, useRef } from "react";
 import {
   HiOutlineCalendar,

@@ -12,12 +12,12 @@ import {
   HiOutlineDotsCircleHorizontal,
 } from "react-icons/hi";
 import SidebarLink from "./SidebarLink";
-import { openModal, changeModalContent } from "../store/modalSlice";
+import { openModal, changeModalContent } from "../../store/modalSlice";
 
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
 
-import UserOptions from "./UserOptions";
+import UserOptions from "../../components/navigation/UserOptions";
 
 function SideBar() {
   const dispatch = useDispatch();

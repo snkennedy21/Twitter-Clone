@@ -1,5 +1,5 @@
 import React from "react";
-import Tweet from "./Tweet";
+import Tweet from "../../components/tweet/Tweet";
 
 function ReplyTweets({ tweet }) {
   return tweet.replies.map((reply) => {

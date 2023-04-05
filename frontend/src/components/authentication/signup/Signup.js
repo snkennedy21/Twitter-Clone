@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useCreateAccountMutation } from "../../store/mainApi";
-import { closeModal } from "../../store/modalSlice";
-import { validateToken } from "../../store/tokenSlice";
+import { useCreateAccountMutation } from "../../../store/mainApi";
+import { closeModal } from "../../../store/modalSlice";
+import { validateToken } from "../../../store/tokenSlice";
 import SignupStepOne from "./SignupStepOne";
 import SignupStepTwo from "./SignupStepTwo";
 import SignupStepThree from "./SignupStepThree";

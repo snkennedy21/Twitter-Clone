@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useUpdateUserMutation } from "../store/mainApi";
+import { useUpdateUserMutation } from "../../store/mainApi";
 
 function EditProfileForm() {
   const [updateUser] = useUpdateUserMutation();

@@ -10,7 +10,7 @@ import {
 
 import { IoMailOutline } from "react-icons/io5";
 
-import { openModal, changeModalContent } from "../store/modalSlice";
+import { openModal, changeModalContent } from "../../store/modalSlice";
 
 function BottomBar() {
   const dispatch = useDispatch();

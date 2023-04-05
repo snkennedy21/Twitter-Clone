@@ -1,18 +1,18 @@
 import "./App.css";
-import Home from "./components/Home";
+import Home from "./pages/home/Home";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import SideBar from "./components/SideBar";
-import Feed from "./components/Feed";
-import Modal from "./components/Modal";
-import SignupBar from "./components/SignupBar";
-import CurrentTweet from "./components/CurrentTweet";
+import SideBar from "./components/navigation/SideBar";
+import Feed from "./pages/Feed";
+import Modal from "./components/modal/Modal";
+import SignupBar from "./components/authentication/SignupBar";
+import CurrentTweet from "./pages/tweet/CurrentTweet";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { invalidateToken, validateToken } from "./store/tokenSlice";
 import { useDispatch } from "react-redux";
 import React from "react";
-import BottomBar from "./components/BottomBar";
-import ProfilePage from "./components/ProfilePage";
+import BottomBar from "./components/navigation/BottomBar";
+import ProfilePage from "./pages/profile/ProfilePage";
 
 function App() {
   const token = useSelector((state) => state.token).token;
