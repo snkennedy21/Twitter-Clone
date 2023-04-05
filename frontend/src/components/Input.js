@@ -1,4 +1,4 @@
-import profilePic from "../images/profile.png";
+import blankProfilePicture from "../images/blank-profile-picture.png";
 import { useState, useRef } from "react";
 import {
   HiOutlineCalendar,
@@ -13,7 +13,7 @@ import { useCreateTweetMutation, useGetUserDataQuery } from "../store/mainApi";
 
 function Input({ placeholder, tweetId, tweetModal }) {
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
-    JSON.parse(localStorage.getItem("currentUser")).id
+    JSON.parse(localStorage.getItem("currentUserId"))
   );
   const [input, setInput] = useState("");
   const [selectedFile, setSelectedFile] = useState(null);
@@ -50,7 +50,7 @@ function Input({ placeholder, tweetId, tweetModal }) {
         <div>Loading</div>
       ) : (
         <img
-          src={userData.photo_url}
+          src={userData.photo_url ? userData.photo_url : blankProfilePicture}
           alt=""
           className="h-11 w-11 rounded-full cursor-pointer"
         />

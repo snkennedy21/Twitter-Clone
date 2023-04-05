@@ -12,6 +12,7 @@ import {
 import { useLikeTweetMutation } from "../store/mainApi";
 import { useNavigate } from "react-router-dom";
 import { useIncreaseViewCountMutation } from "../store/mainApi";
+import blankProfilePicture from "../images/blank-profile-picture.png";
 
 function Tweet({ tweet, isChainOfTweets, extraPadding }) {
   const [likeTweet] = useLikeTweetMutation();
@@ -44,7 +45,9 @@ function Tweet({ tweet, isChainOfTweets, extraPadding }) {
     >
       <div className="flex flex-col w-12">
         <img
-          src={tweet.owner.photo_url}
+          src={
+            tweet.owner.photo_url ? tweet.owner.photo_url : blankProfilePicture
+          }
           alt=""
           className="h-11 w-11 rounded-full"
         />

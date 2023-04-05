@@ -24,6 +24,8 @@ function App() {
       dispatch(validateToken());
     } else {
       dispatch(invalidateToken());
+      localStorage.removeItem("currentUserId");
+      localStorage.removeItem("currentUser");
     }
   });
 

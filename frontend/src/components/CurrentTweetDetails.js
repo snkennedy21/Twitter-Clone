@@ -10,7 +10,7 @@ import {
   HiBookmark,
   HiHeart,
 } from "react-icons/hi2";
-import profilePic from "../images/profile.png";
+import blankProfilePicture from "../images/blank-profile-picture.png";
 import TweetIcon from "./TweetIcon";
 import {
   useBookmarkTweetMutation,
@@ -44,7 +44,11 @@ function CurrentTweetDetails({ tweet }) {
       <div className=" border-b border-greyBorder">
         <div className="flex gap-3 mb-4">
           <img
-            src={tweet.owner.photo_url}
+            src={
+              tweet.owner.photo_url
+                ? tweet.owner.photo_url
+                : blankProfilePicture
+            }
             alt=""
             className="h-11 w-11 rounded-full cursor-pointer"
           />

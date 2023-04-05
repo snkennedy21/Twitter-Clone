@@ -5,7 +5,7 @@ import {
   useGetUserTweetsQuery,
   useUpdateUserMutation,
 } from "../store/mainApi";
-import profilePic from "../images/profile.png";
+import blankProfilePicture from "../images/blank-profile-picture.png";
 import Tweet from "./Tweet";
 import { useDispatch } from "react-redux";
 import { openModal, changeModalContent } from "../store/modalSlice";
@@ -13,16 +13,18 @@ import { openModal, changeModalContent } from "../store/modalSlice";
 function ProfilePage() {
   const dispatch = useDispatch();
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
-    JSON.parse(localStorage.getItem("currentUser")).id
+    JSON.parse(localStorage.getItem("currentUserId"))
   );
   const { data: userTweets, isLoading: userTweetsLoading } =
-    useGetUserTweetsQuery(JSON.parse(localStorage.getItem("currentUser")).id);
+    useGetUserTweetsQuery(JSON.parse(localStorage.getItem("currentUserId")));
 
   function openModalHandler(e) {
     const buttonText = e.target.value;
     dispatch(changeModalContent(buttonText));
     dispatch(openModal());
   }
+
+  console.log(userData);
 
   if (userDataLoading || userTweetsLoading) return <div>Loading</div>;
 
@@ -43,7 +45,7 @@ function ProfilePage() {
         </div>
         <div className="bg-[#cfd9de] w-full h-48 relative">
           <img
-            src={userData.photo_url}
+            src={userData.photo_url ? userData.photo_url : blankProfilePicture}
             className="w-36 h-36 rounded-full absolute bottom-0 left-4 translate-y-1/2 border-white border-4"
           />
         </div>

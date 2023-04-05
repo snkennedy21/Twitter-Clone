@@ -8,6 +8,7 @@ function EditProfileForm() {
 
   function updateUserProfile(e) {
     e.preventDefault();
+    console.log("hello");
     updateUser(e.target);
   }
 

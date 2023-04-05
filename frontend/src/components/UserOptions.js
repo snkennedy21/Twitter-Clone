@@ -1,12 +1,15 @@
 import { useState } from "react";
 import React from "react";
-import profilePicture from "../images/profile.png";
+import blankProfilePicture from "../images/blank-profile-picture.png";
 import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { useDispatch } from "react-redux";
 import { invalidateToken } from "../store/tokenSlice";
-import { useLogoutMutation } from "../store/mainApi";
+import { useLogoutMutation, useGetUserDataQuery } from "../store/mainApi";
 
 function UserOptions() {
+  const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
+    JSON.parse(localStorage.getItem("currentUserId"))
+  );
   const [isUserOptionsOpen, setIsUserOptionsOpen] = useState(false);
   const dispatch = useDispatch();
   const [logout] = useLogoutMutation();
@@ -15,11 +18,14 @@ function UserOptions() {
     document.cookie = `session=; max-age=-1; path=/`;
     dispatch(invalidateToken());
     localStorage.removeItem("currentUserId");
+    localStorage.removeItem("currentUser");
     logout();
   }
 
+  if (userDataLoading) return <div>Loading...</div>;
+
   return (
-    <>
+    <React.Fragment>
       {isUserOptionsOpen && (
         <div
           onClick={() => {
@@ -60,7 +66,7 @@ function UserOptions() {
 
         <div>
           <img
-            src={profilePicture}
+            src={userData.photo_url ? userData.photo_url : blankProfilePicture}
             className="h-10 w-10 rounded-full xl:mr-2.5"
           />
         </div>
@@ -71,7 +77,7 @@ function UserOptions() {
         </div>
         <HiOutlineDotsHorizontal className="hidden h-5 w-5 ml-10 xl:inline" />
       </div>
-    </>
+    </React.Fragment>
   );
 }
 

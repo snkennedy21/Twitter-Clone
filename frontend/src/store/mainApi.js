@@ -87,7 +87,7 @@ export const mainApi = createApi({
 
     updateUser: builder.mutation({
       query: (data) => {
-        const userId = JSON.parse(localStorage.getItem("currentUser")).id;
+        const userId = JSON.parse(localStorage.getItem("currentUserId"));
         let formData = null;
         if (data instanceof HTMLElement) {
           formData = new FormData(data);
