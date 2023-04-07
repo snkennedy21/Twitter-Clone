@@ -6,21 +6,20 @@ import { HiOutlineCamera } from "react-icons/hi2";
 
 function EditProfileForm() {
   const [updateUser] = useUpdateUserMutation();
-  const [userHandle, setUserHandle] = useState("");
   const [profilePicture, setProfilePicture] = useState("");
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
     JSON.parse(localStorage.getItem("currentUserId"))
   );
+  const [name, setName] = useState(userData.name);
   const photoPickerRef = useRef(null);
 
   function updateUserProfile(e) {
     e.preventDefault();
-    console.log("hello");
     updateUser(e.target);
   }
 
-  function userHandleChangeHandler(e) {
-    setUserHandle(e.target.value);
+  function nameChangeHandler(e) {
+    setName(e.target.value);
   }
 
   function profilePictureChangeHandler(e) {
@@ -29,7 +28,11 @@ function EditProfileForm() {
 
   return (
     <form onSubmit={updateUserProfile}>
-      <button>Submit</button>
+      <div className="flex justify-end px-4">
+        <button className="bg-blackText text-white rounded-full py-2 px-5 font-bold text-sm mb-2 hover:opacity-[95%] ">
+          Save
+        </button>
+      </div>
       <input
         onChange={profilePictureChangeHandler}
         name="file"
@@ -38,6 +41,7 @@ function EditProfileForm() {
         value={profilePicture}
         ref={photoPickerRef}
       />
+
       <div className="bg-[#cfd9de] w-full h-48 relative">
         <img
           src={userData.photo_url ? userData.photo_url : blankProfilePicture}
@@ -54,10 +58,11 @@ function EditProfileForm() {
       </div>
       <div className="flex flex-col w-full px-3 mt-20">
         <input
-          onChange={userHandleChangeHandler}
-          value={userHandle}
+          onChange={nameChangeHandler}
+          value={name}
           type="text"
-          placeholder="Handle"
+          name="name"
+          placeholder="Name"
           className="border border-[#d0d0d0] placeholder-[#606060] py-3 px-2 w-full rounded-md outline-none focus:border-primaryColor focus:placeholder-primaryColor"
         />
       </div>

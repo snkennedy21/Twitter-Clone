@@ -53,7 +53,7 @@ function CurrentTweetDetails({ tweet }) {
             className="h-11 w-11 rounded-full cursor-pointer"
           />
           <div className="flex flex-col">
-            <h3 className="font-semibold text-md">{`${tweet.owner.first_name} ${tweet.owner.last_name}`}</h3>
+            <h3 className="font-semibold text-md">{tweet.owner.name}</h3>
             <span className="text-[#536471]">@{tweet.owner.handle}</span>
           </div>
         </div>

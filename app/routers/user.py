@@ -24,12 +24,11 @@ router = APIRouter(
 )
 
 @router.put('/{id}')
-def update_user(handle: str = Form(), file: UploadFile = File(...), db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
+def update_user(name: str = Form(), file: UploadFile = File(...), db: Session = Depends(get_db), current_user: int = Depends(oauth2.get_current_user)):
     print(AWS_ACCESS_KEY)
     print(AWS_SECRET_KEY)
     print(S3_BUCKET_NAME)
 
-    print(handle)
 
     url = current_user.photo_url
     if file.filename != '':
@@ -38,12 +37,12 @@ def update_user(handle: str = Form(), file: UploadFile = File(...), db: Session 
             aws_access_key_id = AWS_ACCESS_KEY,
             aws_secret_access_key = AWS_SECRET_KEY
         )
-        file_name = f"{handle}_{file.filename}"
+        file_name = f"{name}_{file.filename}"
         s3.upload_fileobj(file.file, S3_BUCKET_NAME, file_name)
         url = f"https://{S3_BUCKET_NAME}.s3.amazonaws.com/{file_name}"
 
     current_user.photo_url = url
-    current_user.handle = handle
+    current_user.name = name
     db.commit()
 
     return {"Message": "Successfully udated user info"}
@@ -62,7 +61,7 @@ def get_user_tweets(id, response: Response, db: Session = Depends(get_db), acces
         reply_count = db.query(func.count(Tweet.id)).filter(Tweet.parent_tweet_id == tweet.id).scalar()
         like_count = db.query(func.count(Like.user_id)).filter(Like.tweet_id == tweet.id).scalar()
         view_count = db.query(func.count(View.tweet_id)).filter(View.tweet_id == tweet.id).scalar()
-        owner = db.query(User.handle, User.email, User.id, User.first_name, User.last_name, User.photo_url).filter(User.id == tweet.owner_id).first()._asdict()
+        owner = db.query(User.handle, User.email, User.id, User.name, User.photo_url).filter(User.id == tweet.owner_id).first()._asdict()
 
         if current_user:
             user_has_liked = db.query(Like).filter(Like.user_id == current_user.id, Like.tweet_id == tweet.id).first() is not None

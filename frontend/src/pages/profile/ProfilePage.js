@@ -39,7 +39,9 @@ function ProfilePage() {
             <HiArrowLeft className="w-5 h-5 text-blackText" />
           </div>
           <div className="flex flex-col">
-            <h2 className="text-lg sm:text-xl font-bold text-blackText">{`${userData.first_name} ${userData.last_name}`}</h2>
+            <h2 className="text-lg sm:text-xl font-bold text-blackText">
+              {userData.name}
+            </h2>
             <p className="text-[#536471] text-sm">0 Tweets</p>
           </div>
         </div>
@@ -59,7 +61,7 @@ function ProfilePage() {
           </button>
         </div>
         <figure className="flex flex-col p-6">
-          <p className="text-black font-bold text-xl">{`${userData.first_name} ${userData.last_name}`}</p>
+          <p className="text-black font-bold text-xl">{userData.name}</p>
           <p className="text-[#536471]">@{userData.handle}</p>
         </figure>
       </div>

@@ -6,7 +6,7 @@ export const mainApi = createApi({
     baseUrl: `${process.env.REACT_APP_BASE_URL}`,
   }),
 
-  tagTypes: ["Tweet", "Tweet", "Comment", "User", "UserTweets"],
+  tagTypes: ["Tweet", "Tweets", "User", "UserTweets"],
 
   endpoints: (builder) => ({
     // *************** //
@@ -91,7 +91,10 @@ export const mainApi = createApi({
         let formData = null;
         if (data instanceof HTMLElement) {
           formData = new FormData(data);
+          console.log(data);
         }
+        const formDataObject = Object.fromEntries(formData.entries());
+        console.log(formDataObject);
         return {
           url: `/users/${userId}`,
           method: "PUT",
@@ -100,7 +103,7 @@ export const mainApi = createApi({
           contentType: "multipart/form-data",
         };
       },
-      invalidatesTags: ["UserTweets", "User"],
+      invalidatesTags: ["UserTweets", "User", "Tweets"],
     }),
 
     getUserTweets: builder.query({

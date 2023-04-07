@@ -25,8 +25,7 @@ function Signup() {
     const signupData = {
       handle: handle,
       email: email,
-      first_name: firstName,
-      last_name: lastName,
+      name: `${firstName} ${lastName}`,
       password: password,
     };
     const payload = await createAccount(signupData);

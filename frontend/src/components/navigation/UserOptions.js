@@ -54,7 +54,7 @@ function UserOptions() {
                 onClick={logoutHandler}
                 className="flex items-center font-bold h-[50px] px-3 hover:bg-[#f7f7f7]"
               >
-                Log out @UserHandle
+                Log out @{userData.handle}
               </div>
             </div>
             <div
@@ -72,8 +72,8 @@ function UserOptions() {
         </div>
 
         <div className="hidden xl:inline leading-5">
-          <h4>Users Name</h4>
-          <p>@Handle</p>
+          <h4>{userData.name}</h4>
+          <p>@{userData.handle}</p>
         </div>
         <HiOutlineDotsHorizontal className="hidden h-5 w-5 ml-10 xl:inline" />
       </div>
