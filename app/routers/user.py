@@ -49,9 +49,18 @@ def update_user(name: str = Form(), file: UploadFile = File(...), db: Session = 
 
 
 @router.get('/{id}/tweets')
-def get_user_tweets(id, response: Response, db: Session = Depends(get_db), access_token: str = Cookie(None)):
+def get_user_tweets(id, response: Response, db: Session = Depends(get_db), slug: str = "Tweets", access_token: str = Cookie(None)):
     current_user = oauth2.get_current_user(access_token, db)
-    tweets = db.query(Tweet).filter(Tweet.owner_id == id).all()
+
+    tweets = []
+
+    if slug == "Tweets":
+        tweets = db.query(Tweet).filter(Tweet.owner_id == id, Tweet.parent_tweet_id == None).all()
+    elif slug == "Replies":
+        tweets = db.query(Tweet).filter(Tweet.owner_id == id, Tweet.parent_tweet_id != None).all()
+    else:
+        tweets = db.query(Tweet).join(Like).filter(Like.user_id == id).all()
+
 
     if current_user is None:
         user_has_liked = False

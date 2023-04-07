@@ -107,9 +107,9 @@ export const mainApi = createApi({
     }),
 
     getUserTweets: builder.query({
-      query: (userId) => {
+      query: (data) => {
         return {
-          url: `/users/${userId}/tweets`,
+          url: `/users/${data.id}/tweets/?slug=${data.slug}`,
           method: "GET",
           credentials: "include",
         };

@@ -13,6 +13,7 @@ import {
 } from "react-icons/hi";
 import SidebarLink from "./SidebarLink";
 import { openModal, changeModalContent } from "../../store/modalSlice";
+import { useNavigate } from "react-router-dom";
 
 import { useSelector, useDispatch } from "react-redux";
 import React from "react";
@@ -20,6 +21,7 @@ import React from "react";
 import UserOptions from "../../components/navigation/UserOptions";
 
 function SideBar() {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   function openModalHandler(e) {
@@ -32,7 +34,12 @@ function SideBar() {
   return (
     <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[340px] p-2 fixed h-full">
       <div className="flex items-center justify-center w-14 h-14 hoverAnimation hover:bg-[#e8f5fe] p-0 xl:ml-24">
-        <FaTwitter className="w-8 h-8 text-primaryColor" />
+        <FaTwitter
+          onClick={() => {
+            navigate("/home");
+          }}
+          className="w-8 h-8 text-primaryColor"
+        />
       </div>
 
       {token ? (

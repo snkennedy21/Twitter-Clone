@@ -1,4 +1,5 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import { HiArrowLeft } from "react-icons/hi2";
 import {
   useGetUserDataQuery,
@@ -11,12 +12,23 @@ import { useDispatch } from "react-redux";
 import { openModal, changeModalContent } from "../../store/modalSlice";
 
 function ProfilePage() {
+  const [activeButton, setActiveButton] = useState("Tweets");
   const dispatch = useDispatch();
   const { data: userData, isLoading: userDataLoading } = useGetUserDataQuery(
     JSON.parse(localStorage.getItem("currentUserId"))
   );
-  const { data: userTweets, isLoading: userTweetsLoading } =
-    useGetUserTweetsQuery(JSON.parse(localStorage.getItem("currentUserId")));
+  const {
+    data: userTweets,
+    isLoading: userTweetsLoading,
+    refetch,
+  } = useGetUserTweetsQuery({
+    id: JSON.parse(localStorage.getItem("currentUserId")),
+    slug: activeButton,
+  });
+
+  useEffect(() => {
+    refetch();
+  }, [activeButton]);
 
   function openModalHandler(e) {
     const buttonText = e.target.value;
@@ -24,7 +36,10 @@ function ProfilePage() {
     dispatch(openModal());
   }
 
-  console.log(userData);
+  function changeActiveButtonHandler(e) {
+    const newActiveButton = e.currentTarget.value;
+    setActiveButton(newActiveButton);
+  }
 
   if (userDataLoading || userTweetsLoading) return <div>Loading</div>;
 
@@ -64,6 +79,44 @@ function ProfilePage() {
           <p className="text-black font-bold text-xl">{userData.name}</p>
           <p className="text-[#536471]">@{userData.handle}</p>
         </figure>
+        <div className="flex justify-between relative">
+          <button
+            onClick={changeActiveButtonHandler}
+            className={`text-black font-semibold justify-center items-center p-4 pb-0 w-full hover:bg-[#363636] hover:bg-opacity-10 flex flex-col`}
+            value="Tweets"
+          >
+            <span>Tweets</span>
+            {activeButton === "Tweets" ? (
+              <div className="w-14 h-1 bg-primaryColor rounded-sm mt-3"></div>
+            ) : (
+              <div className="h-1 w-14 opacity-0 mt-3"></div>
+            )}
+          </button>
+          <button
+            onClick={changeActiveButtonHandler}
+            className={`text-black font-semibold justify-center items-center p-4 pb-0 w-full hover:bg-[#363636] hover:bg-opacity-10 flex flex-col`}
+            value="Replies"
+          >
+            <span>Replies</span>
+            {activeButton === "Replies" ? (
+              <div className="w-14 h-1 bg-primaryColor rounded-sm mt-3"></div>
+            ) : (
+              <div className="h-1 w-14 opacity-0 mt-3"></div>
+            )}
+          </button>
+          <button
+            onClick={changeActiveButtonHandler}
+            className={`text-black font-semibold justify-center items-center p-4 pb-0 w-full hover:bg-[#363636] hover:bg-opacity-10 flex flex-col`}
+            value="Likes"
+          >
+            <span>Likes</span>
+            {activeButton === "Likes" ? (
+              <div className="w-14 h-1 bg-primaryColor rounded-sm mt-3"></div>
+            ) : (
+              <div className="h-1 w-14 opacity-0 mt-3"></div>
+            )}
+          </button>
+        </div>
       </div>
       {userTweets.map((tweet) => {
         return (
