@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import React from "react";
 import BottomBar from "./components/navigation/BottomBar";
 import ProfilePage from "./pages/profile/ProfilePage";
+import BookmarkedTweets from "./pages/bookmarks/BookmarkedTweets";
 
 function App() {
   const token = useSelector((state) => state.token).token;
@@ -39,6 +40,7 @@ function App() {
               <Route path="/home" element={<Home />} />
               <Route path="/profile" element={<ProfilePage />} />
               <Route path="/tweets/:tweetId" element={<CurrentTweet />} />
+              <Route path="/bookmarks" element={<BookmarkedTweets />} />
             </Routes>
           </Feed>
 

@@ -11,7 +11,7 @@ router = APIRouter(
 
 
 @router.post("/", status_code=status.HTTP_201_CREATED)
-def like(bookmark: BookmarkCreated, db: Session = Depends(database.get_db), current_user: int = Depends(oauth2.get_current_user)):
+def bookmark(bookmark: BookmarkCreated, db: Session = Depends(database.get_db), current_user: int = Depends(oauth2.get_current_user)):
 
 
     tweet = db.query(Tweet).where(Tweet.id == bookmark.tweet_id).first()
@@ -20,9 +20,12 @@ def like(bookmark: BookmarkCreated, db: Session = Depends(database.get_db), curr
             status_code=status.HTTP_404_NOT_FOUND,
             detail=f"tweet with id: {bookmark.tweet_id} does not exist"
         )
+    
+    print(bookmark)
 
-    bookmark_query = db.query(Bookmark).filter(bookmark.tweet_id == bookmark.tweet_id, Bookmark.user_id == current_user.id)
+    bookmark_query = db.query(Bookmark).filter(Bookmark.tweet_id == bookmark.tweet_id, Bookmark.user_id == current_user.id)
     found_bookmark = bookmark_query.first()
+    print(found_bookmark)
     if bookmark.dir == 1:
         if found_bookmark:
             raise HTTPException(

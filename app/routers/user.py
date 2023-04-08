@@ -1,7 +1,7 @@
 from fastapi import FastAPI, status, HTTPException, Depends, APIRouter, Response, Cookie, File, UploadFile, Form
 from app.schemas import UserCreate, UserResponse
 from app import utils
-from app.models import User, Tweet, Like, View
+from app.models import User, Tweet, Like, View, Bookmark
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from app.database import get_db
@@ -58,8 +58,10 @@ def get_user_tweets(id, response: Response, db: Session = Depends(get_db), slug:
         tweets = db.query(Tweet).filter(Tweet.owner_id == id, Tweet.parent_tweet_id == None).all()
     elif slug == "Replies":
         tweets = db.query(Tweet).filter(Tweet.owner_id == id, Tweet.parent_tweet_id != None).all()
-    else:
+    elif slug == "Likes":
         tweets = db.query(Tweet).join(Like).filter(Like.user_id == id).all()
+    elif slug == "Bookmarks":
+        tweets = db.query(Tweet).join(Bookmark).filter(Bookmark.user_id == id).all()
 
 
     if current_user is None:
