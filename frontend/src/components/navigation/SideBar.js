@@ -32,7 +32,7 @@ function SideBar() {
 
   const token = useSelector((state) => state.token).token;
   return (
-    <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[340px] p-2 fixed h-full">
+    <div className="hidden sm:flex flex-col items-center xl:items-start xl:w-[200px] p-2 fixed h-full">
       <div className="flex items-center justify-center w-14 h-14 hoverAnimation hover:bg-[#e8f5fe] p-0 xl:ml-24">
         <FaTwitter
           onClick={() => {
