@@ -51,6 +51,7 @@ function Signup() {
   }, [isModalOpen]);
 
   function changeSignupStepHandler() {
+    console.log("HELLO");
     setSignupStep(signupStep + 1);
   }
 

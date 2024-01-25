@@ -30,6 +30,7 @@ function SignupStepTwo({
         changeSignupStep();
       })
       .catch((error) => {
+        console.log(error);
         setEmailError(error.data.detail);
         checkIfFirstNameEmpty();
         checkIfLastNameEmpty();

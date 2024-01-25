@@ -20,6 +20,7 @@ function Login() {
     localStorage.setItem("currentUserId", JSON.stringify(payload.data.user.id));
     let expirationTime = new Date();
     expirationTime.setTime(expirationTime.getTime() + 60 * 60 * 1000);
+    console.log("BOLOGNA");
     document.cookie = `session=true; expires=${expirationTime.toUTCString()}; path=/`;
     dispatch(validateToken());
     setUsername("");

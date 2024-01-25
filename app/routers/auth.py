@@ -14,10 +14,13 @@ router = APIRouter(
 # response_model=Token
 @router.post('/login', response_model=Token)
 def login(response: Response, user_credentials: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(database.get_db)):
-    
+    print(user_credentials)
+    users = db.query(User).all()
+    print(users)
     user = db.query(User).where(User.email == user_credentials.username).first()
-
+    print(user)
     if not user:
+        print("HERE I AM")
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
             detail="Invalid Login Credentials"

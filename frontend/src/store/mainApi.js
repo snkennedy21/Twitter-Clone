@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const mainApi = createApi({
   reducerPath: "posts",
   baseQuery: fetchBaseQuery({
-    baseUrl: `${process.env.REACT_APP_BASE_URL}`,
+    baseUrl: `http://localhost:8000`,
   }),
 
   tagTypes: ["Tweet", "Tweets", "User", "UserTweets"],
@@ -155,11 +155,13 @@ export const mainApi = createApi({
     }),
 
     checkIfEmailValid: builder.mutation({
-      query: (email) => ({
-        url: `/users/valid/email/${email}`,
-        method: "GET",
-        credentials: "include",
-      }),
+      query: (email) => {
+        return {
+          url: `/users/valid/email/${email}`,
+          method: "GET",
+          credentials: "include",
+        };
+      },
     }),
 
     checkIfHandleValid: builder.mutation({

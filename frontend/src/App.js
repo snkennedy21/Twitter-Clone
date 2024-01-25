@@ -21,9 +21,12 @@ function App() {
 
   useEffect(() => {
     const authorizationCookie = document.cookie;
+    console.log("auth cookie: ", authorizationCookie);
     if (authorizationCookie === "session=true") {
+      console.log("HERE I AM NOW");
       dispatch(validateToken());
     } else {
+      console.log("POTATO");
       dispatch(invalidateToken());
       localStorage.removeItem("currentUserId");
       localStorage.removeItem("currentUser");

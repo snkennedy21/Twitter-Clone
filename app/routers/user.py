@@ -136,6 +136,7 @@ def get_user(id: int, db: Session = Depends(get_db)):
 
 @router.get("/valid/email/{email}")
 def check_if_email_valid(email: str, db: Session=Depends(get_db)):
+    print(email)
     if email is None:
         return {"Message": "Bad"}
     regex = re.compile(r'([A-Za-z0-9]+[.-_])*[A-Za-z0-9]+@[A-Za-z0-9-]+(\.[A-Z|a-z]{2,})+')
